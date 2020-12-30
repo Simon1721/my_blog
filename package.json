@@ -17,6 +17,12 @@
   },
   "homepage": "https://github.com/Simon1721/blog#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.5",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5",
+    "validate.js": "^0.13.1"
   }
 }
