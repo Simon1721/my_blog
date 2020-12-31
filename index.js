@@ -1,1 +1,2 @@
-require('./web/api/getArticle')
+require('./web/init');
+// require('./dao/init')

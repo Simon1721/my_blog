@@ -21,7 +21,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: '微软雅黑';
+  font-family: "微软雅黑";
 }
 
 h2,
@@ -111,13 +111,19 @@ li {
   z-index: -1;
   top: 0px;
   animation: myfirst 10s;
-  animation-iteration-count:infinite;
+  animation-iteration-count: infinite;
 }
 
-@keyframes myfirst{
-  0%{background-image: url('https://ccdn.goodq.top/caches/3ddfe819fbff4df42c2816872195b7de/aHR0cHM6Ly81ZDQyNDBiMjU4OWM5LnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDgvYWY5Mzk2NjY4ZTRlNmE0MDdjNWQ5ODIzODlkY2ZiYTQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp');}
-  50%{background-image: url('https://ccdn.goodq.top/caches/3ddfe819fbff4df42c2816872195b7de/aHR0cHM6Ly81ZDQyNDBiMjU4OWM5LnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDgvM2M4NzU3OGMxMjgyMGIxMmE4MjJlYzc1MmI0OWIyNjUtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp');}
-  100%{background-image: url('https://ccdn.goodq.top/caches/3ddfe819fbff4df42c2816872195b7de/aHR0cHM6Ly81ZDQyNDBiMjU4OWM5LnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDgvYWY5Mzk2NjY4ZTRlNmE0MDdjNWQ5ODIzODlkY2ZiYTQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp');}
+@keyframes myfirst {
+  0% {
+    background-image: url("https://ccdn.goodq.top/caches/3ddfe819fbff4df42c2816872195b7de/aHR0cHM6Ly81ZDQyNDBiMjU4OWM5LnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDgvYWY5Mzk2NjY4ZTRlNmE0MDdjNWQ5ODIzODlkY2ZiYTQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp");
+  }
+  50% {
+    background-image: url("https://ccdn.goodq.top/caches/3ddfe819fbff4df42c2816872195b7de/aHR0cHM6Ly81ZDQyNDBiMjU4OWM5LnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDgvM2M4NzU3OGMxMjgyMGIxMmE4MjJlYzc1MmI0OWIyNjUtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp");
+  }
+  100% {
+    background-image: url("https://ccdn.goodq.top/caches/3ddfe819fbff4df42c2816872195b7de/aHR0cHM6Ly81ZDQyNDBiMjU4OWM5LnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDgvYWY5Mzk2NjY4ZTRlNmE0MDdjNWQ5ODIzODlkY2ZiYTQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp");
+  }
 }
 
 .hot-article {
@@ -158,11 +164,11 @@ li {
 .hot-article .article {
   position: absolute;
   width: 320px;
-  height: 500px;
+  height: 520px;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
   top: 50%;
-  margin-top: -250px;
+  margin-top: -260px;
   right: 20%;
 }
 
@@ -179,13 +185,14 @@ li {
 .art-list {
   position: relative;
   margin-top: 15px;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .art-list .img-info {
   position: absolute;
   width: 80px;
   height: 60px;
-  border: 1px solid#000;
 }
 
 .art-list .img-info img {
@@ -199,6 +206,13 @@ li {
   color: #fff;
   font-size: 16px;
   text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.art-list .titel:hover{
+  color: #abcdef;
 }
 
 .art-list .date {
@@ -226,30 +240,54 @@ p {
   font-size: 14px;
 }
 
-.products-recommend .cards {
+.products-recommend #cards{
+  position: relative;
   width: 100%;
   height: 300px;
-  margin-top: 30px;
+  margin-top: 50px;
+  overflow: hidden;
+}
+.products-recommend #cards .cards {
+  position: absolute;
+  width: 2400px;
+  height: 100%;
+  display: flex;
+  transition: all .5s;
 }
 
 .cards li {
   position: relative;
-  border: 1px solid#000;
+  flex-wrap: nowrap;
   width: 260px;
   height: 100%;
   border-radius: 5px;
+  margin-left: 25px;
+  margin-right: 15px;
   overflow: hidden;
   box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.3);
+}
+
+.cards li:hover img{
+  transform: scale(1.2);
+}
+
+.cards li:hover p.titel{
+  color: #4299e1;
+}
+
+.cards li:hover p.text-info{
+  color: #111;
 }
 
 .cards li .img {
   position: absolute;
   width: 100%;
-  height: 100%;
+  top: 0;
 }
 .cards li .img img {
   width: 100%;
   height: 100%;
+  transition: all .5s;
 }
 .cards li .info {
   position: absolute;
@@ -264,15 +302,18 @@ p {
   white-space: nowrap;
   text-overflow: ellipsis;
   padding: 0 10px;
-  color: black;
+  color: #222;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .cards li .info .date,
 .text-info {
-  text-align: left;
-  font-size: 13px;
+  text-align: center;
+  font-size: 14px;
   color: #c4c4c4;
-  margin-top: 5px;
+  margin-top: 7px;
+  margin-bottom: 7px;
 }
 
 .cards li .info .text-info {
@@ -281,8 +322,24 @@ p {
   padding: 0 10px;
   text-align: center;
   color: #c4c4c4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
 }
 
+#cards::before{
+  position: absolute;
+  content: "\e610";
+  font-family: 'iconfont';
+  width: 35px;
+  height: 35px;
+  left: -50px;
+  top:50%;
+  transform: translateY(-50%);
+  background-color: #f00;
+}
 .left-btn {
   width: 35px;
   height: 35px;
@@ -292,6 +349,7 @@ p {
   top: 50%;
   margin-top: 70px;
   cursor: pointer;
+  -webkit-user-select: none;
 }
 
 .right-btn {
@@ -303,6 +361,11 @@ p {
   top: 50%;
   margin-top: 70px;
   cursor: pointer;
+  -webkit-user-select: none;
+}
+
+.left-btn:hover,.right-btn:hover{
+  color: #4299e1;
 }
 
 .new-article {
@@ -384,7 +447,7 @@ p {
   color: #333;
 }
 
-.focus-us .focus .icon{
+.focus-us .focus .icon {
   display: inline-block;
   margin-right: 10px;
   margin-top: 10px;
@@ -471,7 +534,7 @@ p {
   height: 100%;
 }
 
-.good-recommend .obscuration{
+.good-recommend .obscuration {
   position: absolute;
   width: 280px;
   height: 40px;
@@ -485,7 +548,7 @@ p {
   margin-left: -140px;
 }
 
-.good-recommend .obscuration .tem{
+.good-recommend .obscuration .tem {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -493,10 +556,10 @@ p {
   border-radius: 5px;
   top: 0;
   left: 0;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
-.good-recommend .obscuration .surface{
+.good-recommend .obscuration .surface {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -505,38 +568,38 @@ p {
   background-color: transparent;
 }
 
-.obscuration:hover>.tem{
+.obscuration:hover > .tem {
   cursor: pointer;
   width: 0;
 }
 
-.page{
+.page {
   width: 500px;
   height: 100px;
   border: 1px solid red;
   left: 50%;
 }
 
-.tuijian-list{
+.tuijian-list {
   position: relative;
   margin-top: 80px;
   width: 1190px;
   margin: 0 auto;
 }
-.tuijian-list h2{
+.tuijian-list h2 {
   text-align: center;
   margin-top: 80px;
   margin-bottom: 15px;
 }
 
-.tuijian-list ul{
+.tuijian-list ul {
   width: 100%;
   height: 350px;
   border: 1px solid red;
   margin-top: 30px;
 }
 
-.tuijian-list ul li{
+.tuijian-list ul li {
   position: relative;
   float: left;
   width: 275px;
@@ -544,65 +607,64 @@ p {
   margin: 0 10px;
 }
 
-.tuijian-list>p{
+.tuijian-list > p {
   font-size: 14px;
   color: #c4c4c4;
 }
 
-.tuijian-list ul li .img{
+.tuijian-list ul li .img {
   width: 100%;
   height: 100%;
 }
 
-.tuijian-list ul li .img img{
+.tuijian-list ul li .img img {
   width: 100%;
   height: 100%;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
-.tuijian-list ul li .above{
+.tuijian-list ul li .above {
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 45%;
   bottom: 0;
   color: #fff;
-  transition: all .5s;
+  transition: all 0.5s;
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.tuijian-list ul li:hover{
+.tuijian-list ul li:hover {
   transform: scale(1.1);
 }
 
-.tuijian-list ul li:hover .above{
+.tuijian-list ul li:hover .above {
   opacity: 1;
-
 }
 
-.above .titel{
+.above .titel {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 10px 10px;
 }
 
-.above .date{
+.above .date {
   margin: 10px 0 15px 0;
   font-size: 14px;
   color: #c4c4c4;
 }
 
-.above .info{
+.above .info {
   margin: 15px 10px;
   font-size: 14px;
   display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.img-list{
+.img-list {
   width: 100%;
   height: 220px;
   border: 1px solid gold;
@@ -610,48 +672,49 @@ p {
   margin-top: 80px;
 }
 
-.img-list li{
+.img-list li {
   width: 240px;
   height: 100%;
   border: 1px solid red;
 }
 
-.img-list li .img{
+.img-list li .img {
   width: 100%;
   height: 100%;
 }
 
-.img-list li .img img{
+.img-list li .img img {
   width: 100%;
   height: 100%;
 }
 
-.footer{
+.footer {
   background-color: #1a1a1c;
   height: 400px;
 }
 
-.footer .blog-info, .record-info{
+.footer .blog-info,
+.record-info {
   width: 1190px;
   margin: 0 auto;
 }
 
-.footer .blog{
+.footer .blog {
   display: flex;
   justify-content: space-between;
   height: 350px;
 }
 
-.footer .blog h2{
+.footer .blog h2 {
   color: white;
 }
 
-.footer .blog .good-list{
+.footer .blog .good-list {
   width: 275px;
   height: 200px;
 }
 
-.blog .good-recommend{
+.blog .good-recommend {
   margin-top: 50px;
 }
 
@@ -660,24 +723,24 @@ p {
   padding: 0;
 }
 
-.blog-logo{
+.blog-logo {
   margin-top: 50px;
   width: 350px;
 }
-.blog .logo{
+.blog .logo {
   font-family: Georgia;
   font-size: 34px;
   color: white;
   font-weight: 600;
 }
 
-.blog-logo p{
+.blog-logo p {
   color: #c4c4c4;
   text-align: left;
   font-size: 14px;
 }
 
-.blog-logo li{
+.blog-logo li {
   width: 30px;
   height: 30px;
   float: left;
@@ -686,11 +749,11 @@ p {
   border: 1px solid pink;
 }
 
-.footer .blog .good-list li{
+.footer .blog .good-list li {
   margin: 0;
 }
 
-.footer .record{
+.footer .record {
   display: flex;
   height: 50px;
   justify-content: space-between;
@@ -699,7 +762,7 @@ p {
   font-size: 14px;
 }
 
-.footer .record li{
+.footer .record li {
   float: left;
   margin-left: 10px;
 }

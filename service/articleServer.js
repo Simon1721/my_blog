@@ -54,8 +54,6 @@ exports.addArticle = async function (artobj) {
  * 根据id删除一篇文章
  * @param {*} id 
  */
-let offset = 0;
-exports.offset = offset;
 exports.deletedArticle = async function (id) {
     const result = await article.destroy({
         where: {
@@ -85,15 +83,15 @@ exports.updateArticle = async function (id, artobj) {
  * 关键字查找文章
  * @param {string} keyword 
  */
-exports.findArticle = async function (keyword) {
+exports.findArticle = async function (keyword, page = 1, limit = 6) {
     const result = await article.findAndCountAll({
         where: {
             name: {
                 [Op.like]: `%${keyword}%`
             }
         },
-        offset,
-        limit:6
+        offset: (page - 1) * limit,
+        limit: limit
     });
     return {
         total: result.count,
@@ -106,17 +104,16 @@ exports.findArticle = async function (keyword) {
  * 根据标签查找文章
  * @param {*} tag 
  */
-exports.findArticleByTag = async function (tag) {
+exports.findArticleByTag = async function (tag, page = 1, limit = 6) {
     const result = await article.findAndCountAll({
         where: {
             tag: {
                 [Op.like]: `%${tag}%`
             }
         },
-        offset,
-        limit:10
+        offset: (page - 1) * limit,
+        limit: limit
     });
-    console.log(result);
     return {
         total: result.count,
         datas: JSON.parse(JSON.stringify(result.rows))

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>蒋雄的博客</title>
     <link rel="stylesheet" href="./css/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <!-- 头部导航 -->
@@ -29,43 +31,45 @@
         <span>互联网</span>
         <p>小众只是切入点，<br />而远方也不是我的终点</p>
       </div>
-      <div class="article">
+      <div id="article" class="article">
         <h3>热门文章</h3>
-        <div class="art-list">
+        <div class="art-list" v-for="art in hotArtList" :key="art.id">
           <div class="img-info">
-            <img src="" alt="" />
+            <img :src="art.imgurl" :alt="art.name" />
           </div>
-          <p class="titel">寻味广州美食旅游线路</p>
-          <span class="date">发布日期:2019-07-30</span>
+          <p class="titel">{{art.name}}</p>
+          <span class="date"
+            >发布日期: {{ new Date().toLocaleDateString() }}</span
+          >
         </div>
       </div>
     </div>
     <!-- 轮播图 -->
     <div class="swiper"></div>
     <!-- 内容区 -->
-    <div class="container">
+    <div id="container" class="container">
       <!-- 精品推荐 -->
       <div class="products-recommend">
         <h2>精品推荐</h2>
         <p>
           北京，大家最熟悉的城市，但在北京有一个地方或许你没有去过，在夏天炎热的市区
         </p>
-        <div class="left-btn iconfont">&#xe610;</div>
-        <ul class="cards">
-          <li>
-            <div class="img">
-              <img src="" alt="" />
-            </div>
-            <div class="info">
-              <p class="titel">特斯拉CTO离职 公司股价受挫下跌跌超11%</p>
-              <p class="date">2015 08-12</p>
-              <p class="text-info">
-                对特斯拉而言，JBStraubel可谓灵魂人物，他从一开始就在特斯拉工作并把马斯克带进了公司。资...
-              </p>
-            </div>
-          </li>
-        </ul>
-        <div class="right-btn iconfont">&#xe662;</div>
+        <div class="left-btn iconfont" @click="changePage('prev')">&#xe610;</div>
+        <div id="cards">
+          <ul class="cards" :style="{left:left + 'px'}">
+            <li v-for="good in goodArtList" :key="good.id">
+              <div class="img">
+                <img :src="good.imgurl" :alt="good.name" />
+              </div>
+              <div class="info">
+                <p class="titel">{{ good.name }}</p>
+                <p class="date">{{ new Date().toLocaleDateString() }}</p>
+                <p class="text-info">{{ good.content }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="right-btn iconfont" @click="changePage('next')">&#xe662;</div>
       </div>
       <!-- 最新文章 -->
       <div class="new-article">
@@ -319,11 +323,14 @@
           </div>
         </div>
       </div>
-      <hr>
+      <hr />
       <!-- 备案 -->
       <div class="record-info">
         <div class="record">
-          <span class="left">© 2020 Blog 版权所有 网站备案号: 京IPC备88888888-8号(纯属虚构)</span>
+          <span class="left"
+            >© 2020 Blog 版权所有 网站备案号:
+            京IPC备88888888-8号(纯属虚构)</span
+          >
           <ul class="right">
             <li>服务条款</li>
             <li>隐私政策</li>
@@ -332,5 +339,6 @@
         </div>
       </div>
     </div>
+    <script src="./js/index.js"></script>
   </body>
 </html>
