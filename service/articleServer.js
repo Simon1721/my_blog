@@ -16,7 +16,7 @@ exports.addArticle = async function (artobj) {
             type: 'string',
             length: {
                 minimum: 1,
-                maximum: 20
+                maximum: 40
             }
         },
         imgurl: {
@@ -41,6 +41,7 @@ exports.addArticle = async function (artobj) {
         }
     }
     const _artobj = validate(artobj, rule)
+    console.log(_artobj);
     if (!_artobj) {
         const result = await article.create(artobj);
         return result.toJSON();
