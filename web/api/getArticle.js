@@ -7,7 +7,7 @@ const artRouter = express.Router();
 //分页获取文章信息
 artRouter.get('/get', async (req, res) => {
     const keyword = req.query.keyword || '';
-    const page = req.query.page || 1;
+    const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 6;
     const result = await artServ.findArticle(keyword, page, limit);
     res.send(sendMsg.getResult(result))
@@ -16,7 +16,7 @@ artRouter.get('/get', async (req, res) => {
 //根据标签获取文章
 artRouter.get('/getByTag', async (req, res) => {
     const tag = req.query.tag || '';
-    const page = req.query.page || 1;
+    const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 6;
     const result = await artServ.findArticleByTag(tag, page, limit);
     res.send(sendMsg.getResult(result))

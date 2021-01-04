@@ -1,27 +1,15 @@
-@font-face {
-  font-family: "iconfont"; /* project id 2288416 */
-  src: url("//at.alicdn.com/t/font_2288416_i8txjbgmif9.eot");
-  src: url("//at.alicdn.com/t/font_2288416_i8txjbgmif9.eot?#iefix")
-      format("embedded-opentype"),
-    url("//at.alicdn.com/t/font_2288416_i8txjbgmif9.woff2") format("woff2"),
-    url("//at.alicdn.com/t/font_2288416_i8txjbgmif9.woff") format("woff"),
-    url("//at.alicdn.com/t/font_2288416_i8txjbgmif9.ttf") format("truetype"),
-    url("//at.alicdn.com/t/font_2288416_i8txjbgmif9.svg#iconfont") format("svg");
-}
-
-.iconfont {
-  font-family: "iconfont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
+.icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 
 * {
   margin: 0;
   padding: 0;
   font-family: "微软雅黑";
+  text-decoration: none;
 }
 
 h2,
@@ -114,6 +102,14 @@ li {
   animation-iteration-count: infinite;
 }
 
+.swiper::after{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 @keyframes myfirst {
   0% {
     background-image: url("https://ccdn.goodq.top/caches/3ddfe819fbff4df42c2816872195b7de/aHR0cHM6Ly81ZDQyNDBiMjU4OWM5LnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDgvYWY5Mzk2NjY4ZTRlNmE0MDdjNWQ5ODIzODlkY2ZiYTQtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp");
@@ -184,15 +180,23 @@ li {
 
 .art-list {
   position: relative;
+  width: 100%;
+  height: 55px;
   margin-top: 15px;
   margin-bottom: 20px;
   cursor: pointer;
+  transition: all .3s;
+  box-sizing: border-box;
 }
 
 .art-list .img-info {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 80px;
-  height: 60px;
+  height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .art-list .img-info img {
@@ -211,6 +215,10 @@ li {
   text-overflow: ellipsis;
 }
 
+.art-list:hover{
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+}
 .art-list .titel:hover{
   color: #abcdef;
 }
@@ -219,7 +227,7 @@ li {
   font-size: 14px;
   color: #ccc;
   margin-left: 95px;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .products-recommend {
@@ -265,6 +273,7 @@ p {
   margin-right: 15px;
   overflow: hidden;
   box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 .cards li:hover img{
@@ -319,9 +328,9 @@ p {
 .cards li .info .text-info {
   font-size: 13px;
   margin-top: 5px;
-  padding: 0 10px;
+  padding: 0 15px;
   text-align: center;
-  color: #c4c4c4;
+  color: #949494;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
@@ -329,17 +338,6 @@ p {
   -webkit-line-clamp: 3;
 }
 
-#cards::before{
-  position: absolute;
-  content: "\e610";
-  font-family: 'iconfont';
-  width: 35px;
-  height: 35px;
-  left: -50px;
-  top:50%;
-  transform: translateY(-50%);
-  background-color: #f00;
-}
 .left-btn {
   width: 35px;
   height: 35px;
@@ -377,9 +375,6 @@ p {
 
 .new-article .left {
   width: 70%;
-  border: 1px solid#f00;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .new-article .right {
@@ -388,34 +383,46 @@ p {
 }
 
 .new-article .left .new {
-  flex: 0 0 auto;
-  width: 390px;
-  height: 400px;
-  border: 1px solid#abc;
+  float: left;
+  width: 365px;
+  height: 385px;
   background-color: #fff;
-  margin: 0 20px 20px 0;
+  margin: 0 40px 20px 0;
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.new-article .left .new:hover img{
+  transform: scale(1.2);
+}
+
+.new-article .left .new:hover .titel{
+  color: #4299e1;
 }
 
 .new-article .left .new .img {
   width: 100%;
   height: 60%;
   top: 0;
-  border: 1px solid#afd;
+  overflow: hidden;
 }
 
 .new-article .left .new .img img {
   width: 100%;
   height: 100%;
+  transition: all .5s;
 }
 
 .new-article .left .new .titel {
   text-align: left;
   padding: 15px;
-  color: black;
-  font-weight: 700;
+  color: #222;
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .new-article .left .new .info {
@@ -424,6 +431,11 @@ p {
   color: #4c4c4c;
   text-align: left;
   padding: 0 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
 }
 
 .new-article .left .new a {
@@ -449,8 +461,16 @@ p {
 
 .focus-us .focus .icon {
   display: inline-block;
-  margin-right: 10px;
+  font-size: 34px;
+  line-height: 34px;
+  margin-right: 15px;
   margin-top: 10px;
+  transition: all .5s;
+}
+
+.focus-us .focus .icon:hover{
+  transform: rotate(360deg);
+  cursor: pointer;
 }
 
 .right .article {
@@ -462,8 +482,20 @@ p {
 
 .right .article h3,
 .right .article .titel {
-  color: #000;
-  font-weight: 700;
+  color: #222;
+  font-weight: 600;
+}
+
+.right .article .titel{
+  font-size: 15px;
+}
+
+.right .article .art-list:hover .titel{
+  color: #4299e1;
+}
+
+.right .article .art-list .date{
+  color: #949494;
 }
 
 .right .art-search {
@@ -519,7 +551,7 @@ p {
   /* flex: 0 0 23%; */
   float: left;
   margin: 3px;
-  border: 1px solid#000;
+  /* border: 1px solid#000; */
   width: 65px;
   height: 65px;
 }
@@ -577,7 +609,8 @@ p {
   width: 500px;
   height: 100px;
   border: 1px solid red;
-  left: 50%;
+  margin-left: 26%;
+  text-align: center;
 }
 
 .tuijian-list {
@@ -592,10 +625,13 @@ p {
   margin-bottom: 15px;
 }
 
+.tuijian-list .left-btn,.tuijian-list .right-btn{
+  top:40%
+}
+
 .tuijian-list ul {
   width: 100%;
   height: 350px;
-  border: 1px solid red;
   margin-top: 30px;
 }
 
@@ -605,6 +641,10 @@ p {
   width: 275px;
   height: 350px;
   margin: 0 10px;
+  transition: all 0.5s;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
 .tuijian-list > p {
@@ -615,12 +655,12 @@ p {
 .tuijian-list ul li .img {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .tuijian-list ul li .img img {
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
-  transition: all 0.5s;
 }
 
 .tuijian-list ul li .above {
@@ -666,16 +706,16 @@ p {
 
 .img-list {
   width: 100%;
-  height: 220px;
-  border: 1px solid gold;
+  height: 200px;
   box-sizing: border-box;
   margin-top: 80px;
+  display: flex;
 }
 
 .img-list li {
-  width: 240px;
+  flex: 1;
+  width: 200px;
   height: 100%;
-  border: 1px solid red;
 }
 
 .img-list li .img {
@@ -710,7 +750,7 @@ p {
 }
 
 .footer .blog .good-list {
-  width: 275px;
+  width: 300px;
   height: 200px;
 }
 
@@ -746,11 +786,22 @@ p {
   float: left;
   margin-right: 10px;
   margin-top: 20px;
-  border: 1px solid pink;
+  cursor: pointer;
+}
+.blog-logo li .icon{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.footer .blog .good-list li {
+  margin: 3px;
 }
 
-.footer .blog .good-list li {
-  margin: 0;
+.blog .article .art-list .titel{
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .footer .record {
