@@ -10,6 +10,9 @@ artRouter.get('/get', async (req, res) => {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 6;
     const result = await artServ.findArticle(keyword, page, limit);
+    result.datas.forEach(item=>{
+        item.link = '/blog_datail.html?id=' + item.id;
+    })
     res.send(sendMsg.getResult(result))
 })
 
@@ -19,6 +22,25 @@ artRouter.get('/getByTag', async (req, res) => {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 6;
     const result = await artServ.findArticleByTag(tag, page, limit);
+    result.datas.forEach(item=>{
+        item.link = '/blog_datail.html?id=' + item.id;
+    })
+    res.send(sendMsg.getResult(result))
+})
+
+//根据id获取文章
+artRouter.get('/getById', async (req, res) => {
+    const id = req.query.id;
+    const result = await artServ.findArticleById(id);
+    res.send(sendMsg.getResult(result))
+})
+
+//获取全部文章
+artRouter.get('/getAll', async (req, res) => {
+    const result = await artServ.findArticleAll();
+    result.forEach(item=>{
+        item.link = '/blog_datail.html?id=' + item.id;
+    })
     res.send(sendMsg.getResult(result))
 })
 

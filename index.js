@@ -1,2 +1,2 @@
 require('./web/init');
-// require('./dao/init')
+require('./dao/init')

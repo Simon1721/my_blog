@@ -41,7 +41,6 @@ exports.addArticle = async function (artobj) {
         }
     }
     const _artobj = validate(artobj, rule)
-    console.log(_artobj);
     if (!_artobj) {
         const result = await article.create(artobj);
         return result.toJSON();
@@ -101,6 +100,15 @@ exports.findArticle = async function (keyword, page = 1, limit = 6) {
 
 
 /**
+ * 根据id查找文章
+ * @param {*} id 
+ */
+exports.findArticleById = async function (id) {
+    const result = await article.findByPk(id);
+    return JSON.parse(JSON.stringify(result));
+}
+
+/**
  * 根据标签查找文章
  * @param {*} tag 
  */
@@ -119,3 +127,11 @@ exports.findArticleByTag = async function (tag, page = 1, limit = 6) {
         datas: JSON.parse(JSON.stringify(result.rows))
     };
 }
+
+/**
+ * 查询所有文章
+ */
+exports.findArticleAll = async function () {
+    const result = await article.findAll()
+    return JSON.parse(JSON.stringify(result))
+};

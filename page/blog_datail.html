@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>我的博客毕设</title>
-    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/datail.css" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
     />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -22,11 +22,11 @@
       <div class="header">
         <div class="logo">Blog</div>
         <ul>
-          <li class="active"><a href="/index.html">主页</a></li>
-          <li><a href="/blog_datail.html">关于我</a></li>
-          <li><a href="">互联网</a></li>
-          <li><a href="">生活娱乐</a></li>
-          <li><a href="">留言</a></li>
+          <li>主页</li>
+          <li>关于我</li>
+          <li>互联网</li>
+          <li>生活娱乐</li>
+          <li>留言</li>
         </ul>
         <div class="search">
           <input type="text" placeholder="请输入关键词查找" />
@@ -34,79 +34,44 @@
         </div>
       </div>
     </div>
-    <!-- 热门文章 -->
-    <div class="hot-article">
-      <div class="info">
-        <span>互联网</span>
-        <p>小众只是切入点，<br />而远方也不是我的终点</p>
-      </div>
-      <div id="article" class="article">
-        <h3>热门文章</h3>
-        <div class="art-list" v-for="art in hotArtList" :key="art.id">
-        <a :href="art.link" target="_blank">
-          <div class="img-info">
-            <img :src="art.imgurl" :alt="art.name" />
-          </div>
-          <p class="titel">{{art.name}}</p>
-          <span class="date"
-            >发布日期: {{ new Date().toLocaleDateString() }}</span
-          >
-        </a>
-        </div>
-      </div>
-    </div>
-    <!-- 轮播图 -->
-    <div class="swiper"></div>
     <!-- 内容区 -->
     <div id="container" class="container">
-      <!-- 精品推荐 -->
-      <div class="products-recommend">
-        <h2>精品推荐</h2>
-        <p>
-          北京，大家最熟悉的城市，但在北京有一个地方或许你没有去过，在夏天炎热的市区
-        </p>
-        <div class="left-btn iconfont" @click="changePage('prev')">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-jiantou1"></use>
-          </svg>
-        </div>
-        <div id="cards">
-          <ul class="cards" :style="{left:left + 'px'}">
-            <li v-for="good in goodList" :key="good.id">
-              <a :href="good.link" target="_blank">
-                <div class="img">
-                  <img :src="good.imgurl" :alt="good.name" />
-                </div>
-                <div class="info">
-                  <p class="titel">{{ good.name }}</p>
-                  <p class="date">{{ new Date().toLocaleDateString() }}</p>
-                  <p class="text-info">{{ good.content }}</p>
-                </div>
-              </a>
+      <!--文章详情 -->
+      <div class="new-article">
+        <div class="left">
+          <div class="img-title">
+            <img :src="currentArticle.imgurl" :alt="currentArticle.name" />
+          </div>
+          <div class="tag_author">
+            <span class="tag">{{ currentArticle.tag }}</span>
+            <span class="author">作者:  {{ currentArticle.author }}</span>
+          </div>
+          <h1 class="title">{{ currentArticle.name }}</h1>
+          <p class="date">发布日期: {{ currentArticle.createAt }}</p>
+          <div class="content" v-html="currentArticle.content"><pre>{{ currentArticle.content }}</pre></div>
+          <ul class="share">
+            <li>分享到 :</li>
+            <li>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-weixin"></use>
+              </svg>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-qq"></use>
+              </svg>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-weibo"></use>
+              </svg>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-facebook"></use>
+              </svg>
             </li>
           </ul>
-        </div>
-        <div class="right-btn iconfont" @click="changePage('next')">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-jiantou"></use>
-          </svg>
-        </div>
-      </div>
-      <!-- 最新文章 -->
-      <div id="new-article" class="new-article">
-        <div class="left">
-          <div class="new" v-for="newart in newArtList" :key="newart.id">
-            <a :href="newart.link" target="_blank">
-              <div>
-                <div class="img">
-                  <img :src="newart.imgurl" :alt="newart.name" />
-                </div>
-                <p class="titel">{{ newart.name }}</p>
-                <p class="info">{{ newart.content }}</p>
-                <span>阅读正文></span>
-              </div>
-            </a>
-          </div>
         </div>
         <div class="right">
           <div class="focus-us">
@@ -117,7 +82,7 @@
                   <use xlink:href="#icon-github"></use>
                 </svg>
               </a>
-              <a href="https://wx.qq.com/" target="_blank" title="点击跳转">
+              <a href="https://wx.qq.com/" target="_blank" title="点击跳转到微信网页版">
                 <svg class="icon" aria-hidden="true"> 
                   <use xlink:href="#icon-weixin"></use>
                 </svg>
@@ -148,7 +113,9 @@
                     <img :src="latest.imgurl" :alt="latest.name" />
                   </div>
                   <p class="titel">{{ latest.name }}</p>
-                  <span class="date">发布日期: {{ new Date().toLocaleDateString() }}</span>
+                  <span class="date"
+                    >发布日期: {{ new Date().toLocaleDateString() }}</span
+                  >
                 </div>
               </a>
             </div>
@@ -185,75 +152,14 @@
           </div>
         </div>
       </div>
-      <!-- 翻页插件 -->
-      <a href="#new-article">
-      <div class="page">
-        <el-pagination 
-          background layout="prev, pager, next"
-          prev-text="上一页"
-          next-text="下一页" 
-          :total="pagintionData.newTotal" 
-          :page-size="pagintionData.newLimit" 
-          :current-page="pagintionData.currentPage"
-          @next-click="nextChange"
-          @prev-click="prevChange"
-          @current-change="currentChange"
-          >
-        </el-pagination>
-      </a>
-      </div>
-      <hr />
-      <!-- 好物推荐 -->
-      <div class="tuijian-list">
-        <h2>好物推荐</h2>
-        <p>
-          北京，大家最熟悉的城市，但在北京有一个地方或许你没有去过，在夏天炎热的市区
-        </p>
-        <div class="left-btn" @click="changePage('prev')">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-jiantou1"></use>
-          </svg>
-        </div>
-        <ul>
-          <li v-for="jing in jingList" :key="jing.id">
-            <a :href="jing.link" target="_blank">
-              <div>
-                <div class="img">
-                  <img :src="jing.imgurl" :alt="jing.name" />
-                </div>
-                <div class="above">
-                  <p class="titel">{{ jing.name }}</p>
-                  <p class="date">
-                    发布日期: {{ new Date().toLocaleDateString() }}
-                  </p>
-                  <p class="info">{{ jing.content }}</p>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <div class="right-btn iconfont" @click="changePage('prev')">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-jiantou"></use>
-          </svg>
-        </div>
-      </div>
       <ul class="img-list">
         <li v-for="Img in imglist">
-            <div class="img">
-              <img :src="Img" alt="" />
-            </div>
+          <div class="img">
+            <img :src="Img" alt="" />
+          </div>
         </li>
       </ul>
     </div>
-    <!-- 回到顶部 -->
-    <a href="#top">
-      <div class="backTop">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-huidaodingbu"></use>
-        </svg>
-      </div>
-    </a>
     <div id="footer" class="footer">
       <!-- 页底信息 -->
       <div class="blog-info">
@@ -315,11 +221,9 @@
             <h2>好物推荐</h2>
             <ul class="good-list">
               <li v-for="goodImg in goodList" :key="goodImg.id">
-                <a :href="goodImg.link" target="_blank">
-                  <div class="img">
-                    <img :src="goodImg.imgurl" :alt="goodImg.name" />
-                  </div>
-                </a>
+                <div class="img">
+                  <img :src="goodImg.imgurl" :alt="goodImg.name" />
+                </div>
               </li>
             </ul>
           </div>
@@ -341,17 +245,6 @@
         </div>
       </div>
     </div>
-    <script>
-      const back = document.getElementsByClassName('backTop')[0];
-      window.addEventListener("scroll", function(event) {
-          var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-          if(scrollTop >= '1034'){
-            back.style.display = 'block'
-          }else{
-            back.style.display = 'none'
-          }
-      });
-    </script>
-    <script src="./js/index.js"></script>
+    <script src="./js/datail.js"></script>
   </body>
 </html>

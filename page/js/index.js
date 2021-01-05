@@ -5,12 +5,6 @@ const Vm_article = new Vue({
         hotArtList: [],
 
     },
-    methods: {
-
-    },
-    computeds: {
-
-    },
     created() {
         axios.get('http://localhost:1721/api/article/get').then(article => {
             this.hotArtList = article.data.data.datas;
@@ -22,12 +16,17 @@ const Vm_article = new Vue({
 const Vm_container = new Vue({
     el: '#container',
     data: {
+        pagintionData: {
+            newLimit: 6,
+            newTotal: 1,
+            currentPage: 1,
+        },
         goodArtList: [],
         left: 0,
         newArtList: [],
         latestList: [],
-        jingList:[],
-        imglist:[
+        jingList: [],
+        imglist: [
             'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1454112772,3551117385&fm=26&gp=0.jpg',
             'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2284371541,2908510499&fm=26&gp=0.jpg',
             'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=226547533,2294898914&fm=26&gp=0.jpg',
@@ -49,6 +48,39 @@ const Vm_container = new Vue({
                 }
                 this.left -= 300;
             }
+        },
+        nextChange(val) {
+            axios.get('http://localhost:1721/api/article/get', {
+                params: {
+                    page: val,
+                    limit: this.pagintionData.newLimit
+                }
+            }).then(article => {
+                const arrData = article.data.data.datas;
+                this.newArtList = arrData
+            });
+        },
+        prevChange(val) {
+            axios.get('http://localhost:1721/api/article/get', {
+                params: {
+                    page: val,
+                    limit: this.pagintionData.newLimit
+                }
+            }).then(article => {
+                const arrData = article.data.data.datas;
+                this.newArtList = arrData
+            });
+        },
+        currentChange(val) {
+            axios.get('http://localhost:1721/api/article/get', {
+                params: {
+                    page: val,
+                    limit: this.pagintionData.newLimit
+                }
+            }).then(article => {
+                const arrData = article.data.data.datas;
+                this.newArtList = arrData
+            });
         }
     },
     computed: {
@@ -63,7 +95,6 @@ const Vm_container = new Vue({
                 limit: 12
             }
         }).then(article => {
-            console.log(article.data.data.datas);
             this.goodArtList = article.data.data.datas;
         });
         axios.get('http://localhost:1721/api/article/getByTag', {
@@ -72,12 +103,11 @@ const Vm_container = new Vue({
                 limit: 4
             }
         }).then(article => {
-            console.log(article.data.data.datas);
             this.jingList = article.data.data.datas;
         });
-        axios.get('http://localhost:1721/api/article/get').then(article => {
-            const arrDate = article.data.data.datas;
-            this.newArtList = arrDate.reverse()
+        axios.get('http://localhost:1721/api/article/get', { params: { limit: this.pagintionData.newLimit } }).then(article => {
+            const arrData = article.data.data.datas;
+            this.newArtList = arrData.reverse()
         });
         axios.get('http://localhost:1721/api/article/get', {
             params: {
@@ -85,9 +115,12 @@ const Vm_container = new Vue({
             }
         }).then(article => {
             const arrDate = article.data.data.datas;
-            console.log(arrDate);
             this.latestList = arrDate;
         });
+        axios.get('http://localhost:1721/api/article/getAll').then(article => {
+            const arrData = article.data.data;
+            this.pagintionData.newTotal = arrData.length
+        })
     }
 })
 
@@ -95,7 +128,7 @@ const Vm_footer = new Vue({
     el: '#footer',
     data: {
         footerlist: [],
-        goodList:[]
+        goodList: []
     },
     created() {
         axios.get('http://localhost:1721/api/article/get', { params: { limit: 2 } }).then(article => {
