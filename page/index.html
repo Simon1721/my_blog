@@ -49,7 +49,7 @@
           </div>
           <p class="titel">{{art.name}}</p>
           <span class="date"
-            >发布日期: {{ new Date().toLocaleDateString() }}</span
+            >发布日期: {{ art.publishDate }}</span
           >
         </a>
         </div>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="info">
                   <p class="titel">{{ good.name }}</p>
-                  <p class="date">{{ new Date().toLocaleDateString() }}</p>
+                  <p class="date">发布日期: {{ good.publishDate }}</p>
                   <p class="text-info">{{ good.content }}</p>
                 </div>
               </a>
@@ -148,7 +148,7 @@
                     <img :src="latest.imgurl" :alt="latest.name" />
                   </div>
                   <p class="titel">{{ latest.name }}</p>
-                  <span class="date">发布日期: {{ new Date().toLocaleDateString() }}</span>
+                  <span class="date">发布日期: {{ latest.publishDate }}</span>
                 </div>
               </a>
             </div>
@@ -224,7 +224,7 @@
                 <div class="above">
                   <p class="titel">{{ jing.name }}</p>
                   <p class="date">
-                    发布日期: {{ new Date().toLocaleDateString() }}
+                    发布日期: {{ jing.publishDate }}
                   </p>
                   <p class="info">{{ jing.content }}</p>
                 </div>
@@ -305,7 +305,7 @@
                   </div>
                   <p class="titel">{{ footerart.name }}</p>
                   <span class="date"
-                    >发布日期: {{ new Date().toLocaleDateString() }}</span
+                    >发布日期: {{ footerart.publishDate }}</span
                   >
                 </div>
               </a>

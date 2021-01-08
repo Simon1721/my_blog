@@ -1,6 +1,6 @@
 const validate = require('validate.js');
 const comment = require('../dao/comments');
-const {Op} = require('sequelize')
+// const {Op} = require('sequelize');
 
 /**
  * 添加一条评论
@@ -8,10 +8,34 @@ const {Op} = require('sequelize')
  */
 exports.addComment = async function (comtObj) {
     const rule={
-        who:{
+        parentId:{
             presence:{
                 allowEmpty:false
             },
+        },
+        parentName:{
+            presence:{
+                allowEmpty:false
+            },
+            type:'string'
+        },
+        content:{
+            presence:{
+                allowEmpty:false
+            },
+            type:'string'
+        },
+        publishDate:{
+            presence:{
+                allowEmpty:false
+            },
+            datetime:true
+        },
+        imgurl:{
+            presence:{
+                allowEmpty:false
+            },
+            type:'string'
         },
         ArticleId:{
             presence:{
@@ -44,15 +68,14 @@ exports.deletedComment = async function (id) {
 
 
 /**
- * 查找一条评论（评论了谁）
- * @param {*} who 
+ * 查找评论
+ * @param {*} parentId 
  */
-exports.findComment = async function (who){
+exports.findComment = async function (parentId){
     const result = await comment.findAll({
         where:{
-            [Op.like]:`%${who}%`
+            parentId,
         }
     })
-    console.log(result);
-    // return JSON.parse(JSON.stringify(re))
+    return JSON.parse(JSON.stringify(result))
 }

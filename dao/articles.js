@@ -1,5 +1,5 @@
 const sequelize = require('./dataBaseConfig');
-const DadaTypes = require('sequelize')
+const DadaTypes = require('sequelize');
 
 //文章表
 module.exports = sequelize.define('Article', {
@@ -22,6 +22,13 @@ module.exports = sequelize.define('Article', {
     tag: {
         type: DadaTypes.STRING,
         allowNull: false
+    },
+    publishDate:{
+        type: DadaTypes.DATE,
+        allowNull: false,
+        get(){
+            return this.getDataValue('publishDate').getTime();
+        }
     }
 }, {
     paranoid: true

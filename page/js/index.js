@@ -1,3 +1,6 @@
+function getDate (date){
+    return new Date(date).toLocaleDateString().replace(/\//g,'-')
+}
 
 const Vm_article = new Vue({
     el: '#article',
@@ -6,8 +9,12 @@ const Vm_article = new Vue({
 
     },
     created() {
-        axios.get('http://localhost:1721/api/article/get').then(article => {
-            this.hotArtList = article.data.data.datas;
+        axios.get('http://192.168.0.5:1721/api/article/get').then(article => {
+            const tempData = article.data.data.datas;
+            tempData.forEach(item =>{
+                item.publishDate = getDate(item.publishDate)
+            })
+            this.hotArtList = tempData;
         });
 
     }
@@ -50,7 +57,7 @@ const Vm_container = new Vue({
             }
         },
         nextChange(val) {
-            axios.get('http://localhost:1721/api/article/get', {
+            axios.get('http://192.168.0.5:1721/api/article/get', {
                 params: {
                     page: val,
                     limit: this.pagintionData.newLimit
@@ -61,7 +68,7 @@ const Vm_container = new Vue({
             });
         },
         prevChange(val) {
-            axios.get('http://localhost:1721/api/article/get', {
+            axios.get('http://192.168.0.5:1721/api/article/get', {
                 params: {
                     page: val,
                     limit: this.pagintionData.newLimit
@@ -72,7 +79,7 @@ const Vm_container = new Vue({
             });
         },
         currentChange(val) {
-            axios.get('http://localhost:1721/api/article/get', {
+            axios.get('http://192.168.0.5:1721/api/article/get', {
                 params: {
                     page: val,
                     limit: this.pagintionData.newLimit
@@ -89,35 +96,46 @@ const Vm_container = new Vue({
         }
     },
     created() {
-        axios.get('http://localhost:1721/api/article/getByTag', {
+        axios.get('http://192.168.0.5:1721/api/article/getByTag', {
             params: {
                 tag: '好物推荐',
                 limit: 12
             }
         }).then(article => {
-            this.goodArtList = article.data.data.datas;
+            const tempData = article.data.data.datas;
+            tempData.forEach(item =>{
+                item.publishDate = getDate(item.publishDate)
+            })
+            this.goodArtList = tempData;
         });
-        axios.get('http://localhost:1721/api/article/getByTag', {
+        axios.get('http://192.168.0.5:1721/api/article/getByTag', {
             params: {
                 tag: '旅游攻略',
                 limit: 4
             }
         }).then(article => {
-            this.jingList = article.data.data.datas;
+            const tempData = article.data.data.datas;
+            tempData.forEach(item =>{
+                item.publishDate = getDate(item.publishDate)
+            })
+            this.jingList = tempData;
         });
-        axios.get('http://localhost:1721/api/article/get', { params: { limit: this.pagintionData.newLimit } }).then(article => {
+        axios.get('http://192.168.0.5:1721/api/article/get', { params: { limit: this.pagintionData.newLimit } }).then(article => {
             const arrData = article.data.data.datas;
             this.newArtList = arrData.reverse()
         });
-        axios.get('http://localhost:1721/api/article/get', {
+        axios.get('http://192.168.0.5:1721/api/article/get', {
             params: {
                 page: 2
             }
         }).then(article => {
-            const arrDate = article.data.data.datas;
-            this.latestList = arrDate;
+            const tempData = article.data.data.datas;
+            tempData.forEach(item =>{
+                item.publishDate = getDate(item.publishDate)
+            })
+            this.latestList = tempData;
         });
-        axios.get('http://localhost:1721/api/article/getAll').then(article => {
+        axios.get('http://192.168.0.5:1721/api/article/getAll').then(article => {
             const arrData = article.data.data;
             this.pagintionData.newTotal = arrData.length
         })
@@ -131,11 +149,16 @@ const Vm_footer = new Vue({
         goodList: []
     },
     created() {
-        axios.get('http://localhost:1721/api/article/get', { params: { limit: 2 } }).then(article => {
-            this.footerlist = article.data.data.datas;
+        axios.get('http://192.168.0.5:1721/api/article/get', { params: { limit: 2 } }).then(article => {
+            const tempData = article.data.data.datas;
+            tempData.forEach(item =>{
+                item.publishDate = getDate(item.publishDate)
+            })
+            this.footerlist = tempData;
         })
-        axios.get('http://localhost:1721/api/article/get', { params: { limit: 12 } }).then(article => {
+        axios.get('http://192.168.0.5:1721/api/article/get', { params: { limit: 12 } }).then(article => {
             this.goodList = article.data.data.datas;
         })
     }
 });
+

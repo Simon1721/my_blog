@@ -547,19 +547,14 @@ p {
 }
 
 .good-recommend .good-list {
-  /* display: flex;
-  flex-wrap: wrap; */
   width: 100%;
   height: 60%;
   margin-top: 15px;
-  /* justify-content: space-between; */
 }
 
 .good-recommend .good-list li {
-  /* flex: 0 0 23%; */
   float: left;
   margin: 3px;
-  /* border: 1px solid#000; */
   width: 65px;
   height: 65px;
 }
@@ -586,6 +581,7 @@ p {
   bottom: 15px;
   left: 50%;
   margin-left: -140px;
+  cursor: pointer;
 }
 
 .good-recommend .obscuration .tem {

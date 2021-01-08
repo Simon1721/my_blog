@@ -213,6 +213,8 @@ li {
   background-color: #fff;
   margin-right: 20px  ;
   box-sizing: border-box;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .new-article .left .img-title{
@@ -244,9 +246,11 @@ li {
 }
 
 .new-article .left ul{
-  position: absolute;
   padding: 20px 30px;
-  bottom: 30px;
+  margin-top: 20px;
+  width: 100%;
+  border-bottom: 1px solid #949494;
+  box-sizing: border-box;
 }
 
 .new-article .left ul li{
@@ -255,7 +259,7 @@ li {
 }
 .new-article .left ul li + li{
   cursor: pointer;
-  font-size: 22px;
+  font-size: 26px;
 }
 
 .new-article .left h1{
@@ -267,13 +271,153 @@ li {
   box-sizing: border-box;
 }
 
-
-
 .new-article .right .focus-us {
   background-color: #fff;
   border-radius: 5px;
   padding: 30px;
   margin-bottom: 20px;
+}
+
+.comment{
+  padding: 20px 30px;
+}
+
+.comment h3#list{
+  color: #949494;
+  margin-top: 15px;
+}
+
+.commentbox{
+  overflow-y: scroll;
+  max-height: 405px;
+  margin-top: 15px;
+}
+
+.commentbox::-webkit-scrollbar {
+  display: none;
+}
+
+.comment .content{
+  width: 92%;
+  height: 50px;
+  margin-top: 15px;
+  font-size: 16px;
+  outline: none;
+}
+.comment .submit{
+  margin-top: 3px;
+  margin-right: 10px;
+  color: #fff;
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  line-height: 28px;
+  background-color: #4299e1;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #949494;
+  outline: none;
+  cursor: pointer;
+}
+
+.comment .cancel{
+  display: none;
+  margin-top: 3px;
+  color: #fff;
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  line-height: 28px;
+  background-color: #4299e1;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #949494;
+  outline: none;
+  cursor: pointer;
+}
+
+.comment .submit:hover{
+  transform: scale(1.03);
+}
+
+.comment .comment-list{
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  align-items: flex-start;
+}
+
+.comment .no-comment{
+  width: 200px;
+  height: 200px;
+  margin: 0;
+  padding: 0;
+}
+
+.comment .no-comment img{
+  width: 100%;
+  height: 100%;
+}
+
+.comment .comment-list .user-img{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 5px;
+  overflow: hidden;
+}
+
+.comment .comment-list .user-img img{
+  width: 100%;
+  height: 100%;
+}
+
+.comment .comment-list .user-name,.reply{
+  color: #4299e1;
+}
+
+.comment .comment-list .reply-time{
+  display: block;
+  color: #949494;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.comment .comment-list .reply{
+  color: #4299e1;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.comment .comment-list .info{
+  position: relative;
+  padding: 10px 15px;
+  background-color: #f7f8f8;
+  width: 620px;
+  border-radius: 3px;
+  margin-left: 10px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2)
+}
+
+
+.comment .comment-list .info::before{
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  border: 10px solid;
+  border-color: transparent #f8f8f8 transparent transparent;
+  top: 11px;
+  left: -20px;
+  z-index: 10;
+}
+
+.comment .comment-list .info .user-comment{
+  word-wrap: break-word;
+  margin-top: 5px;
+  color: #3c3c3c;
 }
 
 .focus-us p {
@@ -363,31 +507,32 @@ li {
 }
 
 .good-recommend .good-list {
-  /* display: flex;
-  flex-wrap: wrap; */
   width: 100%;
   height: 60%;
   margin-top: 15px;
-  /* justify-content: space-between; */
 }
 
 .good-recommend .good-list li {
-  /* flex: 0 0 23%; */
   float: left;
   margin: 3px;
-  /* border: 1px solid#000; */
   width: 65px;
   height: 65px;
+}
+
+.good-recommend .good-list li::after{
+  content: '';
+  clear: both;
 }
 
 .good-recommend .good-list li .img {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .good-list li .img img {
-  width: 100%;
   height: 100%;
+  margin-left: -23px;
 }
 
 .good-recommend .obscuration {
@@ -402,6 +547,7 @@ li {
   bottom: 15px;
   left: 50%;
   margin-left: -140px;
+  cursor: pointer;
 }
 
 .good-recommend .obscuration .tem {
@@ -433,7 +579,6 @@ li {
   width: 100%;
   height: 200px;
   box-sizing: border-box;
-  margin-top: 80px;
   display: flex;
 }
 

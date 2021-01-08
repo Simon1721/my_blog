@@ -1,6 +1,7 @@
 const article = require('../dao/articles');
 const { Op } = require('sequelize');
-const validate = require('validate.js')
+const validate = require('validate.js');
+const moment = require('moment')
 
 /**
  * 添加一篇文章
@@ -37,6 +38,14 @@ exports.addArticle = async function (artobj) {
             length: {
                 minimum: 1,
                 maximum: 10
+            }
+        },
+        publishDate:{
+            presence: {
+                allowEmpty: false
+            },
+            datetime:{
+                dateOnly:true,
             }
         }
     }
@@ -87,7 +96,10 @@ exports.findArticle = async function (keyword, page = 1, limit = 6) {
         where: {
             name: {
                 [Op.like]: `%${keyword}%`
-            }
+            },
+            tag:{
+                [Op.like]: `%${keyword}%`
+            },
         },
         offset: (page - 1) * limit,
         limit: limit

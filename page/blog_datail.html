@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="//at.alicdn.com/t/font_2288416_b1vstqzx66.js"></script>
+    <script src="//at.alicdn.com/t/font_2288416_8e58urhoxet.js"></script>
   </head>
   <body id="top">
     <!-- 头部导航 -->
@@ -44,11 +44,13 @@
           </div>
           <div class="tag_author">
             <span class="tag">{{ currentArticle.tag }}</span>
-            <span class="author">作者:  {{ currentArticle.author }}</span>
+            <span class="author">作者: {{ currentArticle.author }}</span>
           </div>
           <h1 class="title">{{ currentArticle.name }}</h1>
-          <p class="date">发布日期: {{ currentArticle.createAt }}</p>
-          <div class="content" v-html="currentArticle.content"><pre>{{ currentArticle.content }}</pre></div>
+          <p class="date">发布日期: {{ currentArticle.publishDate }}</p>
+          <div class="content" v-html="currentArticle.content">
+            <pre>{{ currentArticle.content }}</pre>
+          </div>
           <ul class="share">
             <li>分享到 :</li>
             <li>
@@ -72,32 +74,93 @@
               </svg>
             </li>
           </ul>
+          <div class="comment">
+            <h3>发表评论:</h3>
+            <textarea
+              v-model="commentText"
+              class="content"
+              :placeholder="placeholder"
+              :onfocus="textareafocus"
+              ref="textarea"
+            ></textarea>
+            <button class="submit" @click="publishComment" ref="submit">发布</button>
+            <button class="cancel" @click="cancelReply" ref="cancel">取消</button>
+            <h3 id="list">
+              评论列表:
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-pinglun"></use>
+              </svg><span style="font-size: 15px;"> {{ commentNum }}</span>
+            </h3>
+            <div class="commentbox" v-if="commentList.length" ref="commentbox">
+              <div
+                class="comment-list"
+                v-for="(comment,index) in commentList"
+                :key="comment.id"
+              >
+                <div class="user-img">
+                  <img :src="comment.imgurl" :alt="comment.parentName" />
+                </div>
+                <div class="info">
+                  <span class="user-name">{{ comment.parentName }}</span>
+                  <span class="reply" @click="reply(comment.parentName)"
+                  v-if="comment.parentName.includes('回复') ? false : true"
+                    >[回复]</span
+                  >
+                  <span class="reply-time">{{ comment.publishDate }} 评论</span>
+                  <p class="user-comment">{{ comment.content }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="no-comment" v-else>
+              <img src="./img/noComment.png" alt="" />
+            </div>
+          </div>
         </div>
         <div class="right">
           <div class="focus-us">
             <h2>关注我</h2>
             <div class="focus">
-              <a href="https://github.com/Simon1721?tab=repositories" target="_blank" title="点击跳转到蒋雄的github">
+              <a
+                href="https://github.com/Simon1721?tab=repositories"
+                target="_blank"
+                title="点击跳转到蒋雄的github"
+              >
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-github"></use>
                 </svg>
               </a>
-              <a href="https://wx.qq.com/" target="_blank" title="点击跳转到微信网页版">
-                <svg class="icon" aria-hidden="true"> 
+              <a
+                href="https://wx.qq.com/"
+                target="_blank"
+                title="点击跳转到微信网页版"
+              >
+                <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-weixin"></use>
                 </svg>
               </a>
-              <a href="https://user.qzone.qq.com/943417190/infocenter" target="_blank" title="点击跳转到蒋雄的QQ空间">
+              <a
+                href="https://user.qzone.qq.com/943417190/infocenter"
+                target="_blank"
+                title="点击跳转到蒋雄的QQ空间"
+              >
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-qq"></use>
                 </svg>
               </a>
-              <a href="https://weibo.com/5887058001/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="点击跳转到蒋雄的微博">
+              <a
+                href="https://weibo.com/5887058001/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1"
+                target="_blank"
+                title="点击跳转到蒋雄的微博"
+              >
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-weibo"></use>
                 </svg>
               </a>
-              <a href="https://baike.baidu.com/item/Facebook/7449587?fr=aladdin" target="_blank" title="不好意思，中国大陆暂时不能正常访问facebook">
+              <a
+                href="https://baike.baidu.com/item/Facebook/7449587?fr=aladdin"
+                target="_blank"
+                title="不好意思，中国大陆暂时不能正常访问facebook"
+              >
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-facebook"></use>
                 </svg>
@@ -113,9 +176,7 @@
                     <img :src="latest.imgurl" :alt="latest.name" />
                   </div>
                   <p class="titel">{{ latest.name }}</p>
-                  <span class="date"
-                    >发布日期: {{ new Date().toLocaleDateString() }}</span
-                  >
+                  <span class="date">发布日期: {{ latest.publishDate }}</span>
                 </div>
               </a>
             </div>
@@ -211,7 +272,7 @@
                   </div>
                   <p class="titel">{{ footerart.name }}</p>
                   <span class="date"
-                    >发布日期: {{ new Date().toLocaleDateString() }}</span
+                    >发布日期: {{ footerart.publishDate }}</span
                   >
                 </div>
               </a>
