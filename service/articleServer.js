@@ -37,7 +37,7 @@ exports.addArticle = async function (artobj) {
             type: 'string',
             length: {
                 minimum: 1,
-                maximum: 10
+                maximum: 20
             }
         },
         publishDate:{

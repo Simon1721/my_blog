@@ -1,5 +1,5 @@
-function getDate (date){
-    return new Date(date).toLocaleDateString().replace(/\//g,'-')
+function getDate(date) {
+    return new Date(date).toLocaleDateString().replace(/\//g, '-')
 }
 
 const Vm_article = new Vue({
@@ -9,9 +9,9 @@ const Vm_article = new Vue({
 
     },
     created() {
-        axios.get('http://192.168.0.5:1721/api/article/get').then(article => {
+        axios.get('http://127.0.0.1:1721/api/article/get').then(article => {
             const tempData = article.data.data.datas;
-            tempData.forEach(item =>{
+            tempData.forEach(item => {
                 item.publishDate = getDate(item.publishDate)
             })
             this.hotArtList = tempData;
@@ -30,6 +30,8 @@ const Vm_container = new Vue({
         },
         goodArtList: [],
         left: 0,
+        jingLeft: 0,
+        transition:`all 1s cubic-bezier(0.25,0.1,0.25,1)`,
         newArtList: [],
         latestList: [],
         jingList: [],
@@ -57,7 +59,7 @@ const Vm_container = new Vue({
             }
         },
         nextChange(val) {
-            axios.get('http://192.168.0.5:1721/api/article/get', {
+            axios.get('http://127.0.0.1:1721/api/article/get', {
                 params: {
                     page: val,
                     limit: this.pagintionData.newLimit
@@ -68,7 +70,7 @@ const Vm_container = new Vue({
             });
         },
         prevChange(val) {
-            axios.get('http://192.168.0.5:1721/api/article/get', {
+            axios.get('http://127.0.0.1:1721/api/article/get', {
                 params: {
                     page: val,
                     limit: this.pagintionData.newLimit
@@ -79,7 +81,7 @@ const Vm_container = new Vue({
             });
         },
         currentChange(val) {
-            axios.get('http://192.168.0.5:1721/api/article/get', {
+            axios.get('http://127.0.0.1:1721/api/article/get', {
                 params: {
                     page: val,
                     limit: this.pagintionData.newLimit
@@ -88,7 +90,18 @@ const Vm_container = new Vue({
                 const arrData = article.data.data.datas;
                 this.newArtList = arrData
             });
-        }
+        },
+        // swiper() {
+        //     this.timer = setInterval(() => {
+        //         if (this.jingLeft == -4760) {
+        //             this.transition = 'none'
+        //             this.jingLeft = 0;
+        //         } else {
+        //             this.transition = 'all 1s cubic-bezier(0.25,0.1,0.25,1)'
+        //             this.jingLeft -= 1190
+        //         }
+        //     }, 3000)
+        // }
     },
     computed: {
         goodList() {
@@ -96,46 +109,50 @@ const Vm_container = new Vue({
         }
     },
     created() {
-        axios.get('http://192.168.0.5:1721/api/article/getByTag', {
+        // this.$nextTick(() => {
+        //     this.swiper()
+        // })
+        axios.get('http://127.0.0.1:1721/api/article/getByTag', {
             params: {
-                tag: '好物推荐',
-                limit: 12
+                tag: '后端',
+                limit: 9
             }
         }).then(article => {
             const tempData = article.data.data.datas;
-            tempData.forEach(item =>{
+            tempData.forEach(item => {
                 item.publishDate = getDate(item.publishDate)
             })
             this.goodArtList = tempData;
         });
-        axios.get('http://192.168.0.5:1721/api/article/getByTag', {
+        axios.get('http://127.0.0.1:1721/api/article/getByTag', {
             params: {
-                tag: '旅游攻略',
+                tag: '前端框架',
                 limit: 4
             }
         }).then(article => {
             const tempData = article.data.data.datas;
-            tempData.forEach(item =>{
+            tempData.forEach(item => {
                 item.publishDate = getDate(item.publishDate)
             })
             this.jingList = tempData;
+            this.jingList.push(this.jingList[0])
         });
-        axios.get('http://192.168.0.5:1721/api/article/get', { params: { limit: this.pagintionData.newLimit } }).then(article => {
+        axios.get('http://127.0.0.1:1721/api/article/get', { params: { limit: this.pagintionData.newLimit } }).then(article => {
             const arrData = article.data.data.datas;
-            this.newArtList = arrData.reverse()
+            this.newArtList = arrData
         });
-        axios.get('http://192.168.0.5:1721/api/article/get', {
+        axios.get('http://127.0.0.1:1721/api/article/get', {
             params: {
-                page: 2
+                page: 3
             }
         }).then(article => {
             const tempData = article.data.data.datas;
-            tempData.forEach(item =>{
+            tempData.forEach(item => {
                 item.publishDate = getDate(item.publishDate)
             })
             this.latestList = tempData;
         });
-        axios.get('http://192.168.0.5:1721/api/article/getAll').then(article => {
+        axios.get('http://127.0.0.1:1721/api/article/getAll').then(article => {
             const arrData = article.data.data;
             this.pagintionData.newTotal = arrData.length
         })
@@ -149,14 +166,14 @@ const Vm_footer = new Vue({
         goodList: []
     },
     created() {
-        axios.get('http://192.168.0.5:1721/api/article/get', { params: { limit: 2 } }).then(article => {
+        axios.get('http://127.0.0.1:1721/api/article/get', { params: { limit: 2 } }).then(article => {
             const tempData = article.data.data.datas;
-            tempData.forEach(item =>{
+            tempData.forEach(item => {
                 item.publishDate = getDate(item.publishDate)
             })
             this.footerlist = tempData;
         })
-        axios.get('http://192.168.0.5:1721/api/article/get', { params: { limit: 12 } }).then(article => {
+        axios.get('http://127.0.0.1:1721/api/article/getByTag', { params: { tag: '算法', limit: 9 } }).then(article => {
             this.goodList = article.data.data.datas;
         })
     }

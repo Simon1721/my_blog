@@ -31,11 +31,12 @@ function getCommentTime(date) {
 const Vm_container = new Vue({
     el: '#container',
     data: {
+        timer:null,
         title: '',
         commentText: '',
-        replyName : '',
-        replyIsShow:true,
-        placeholder: '请输入您要要发表的评论',
+        replyName: '',
+        replyIsShow: true,
+        placeholder: '请输入您要发表的评论',
         textareafocus: false,
         commentNum: 0,
         commentList: [],
@@ -53,10 +54,11 @@ const Vm_container = new Vue({
     },
     methods: {
         publishComment() {
+            console.log(this.commentText);
             const type = this.$refs.submit.innerHTML;
             axios({
                 method: 'post',
-                url: 'http://192.168.0.5:1721/api/comment/add',
+                url: 'http://127.0.0.1:1721/api/comment/add',
                 data: {
                     parentId: id,
                     parentName: type == '发布' ? 'Blue rain' : 'Blue rain 回复 ' + this.replyName,
@@ -85,18 +87,18 @@ const Vm_container = new Vue({
                 this.$refs.cancel.style.display = 'inline-block'
             })
         },
-        cancelReply(){
+        cancelReply() {
             this.$refs.commentbox.style.display = 'block';
             this.$refs.submit.innerHTML = '发布';
             this.$refs.cancel.style.display = 'none'
             this.placeholder = '请输入您要要发表的评论';
-        }
+        },
     },
     created() {
         const query = window.location.search
         const index = query.indexOf('=')
         id = query.toString().substring(index + 1);
-        axios.get('http://192.168.0.5:1721/api/article/getById', {
+        axios.get('http://127.0.0.1:1721/api/article/getById', {
             params: {
                 id,
             }
@@ -107,15 +109,15 @@ const Vm_container = new Vue({
             const titleDom = document.querySelector('title')
             titleDom.innerHTML = tempData.name;
         });
-        axios.get('http://192.168.0.5:1721/api/article/getByTag', {
+        axios.get('http://127.0.0.1:1721/api/article/getByTag', {
             params: {
-                tag: '好物推荐',
-                limit: 12
+                tag: '后端',
+                limit: 9
             }
         }).then(article => {
             this.goodArtList = article.data.data.datas;
         });
-        axios.get('http://192.168.0.5:1721/api/article/get', {
+        axios.get('http://127.0.0.1:1721/api/article/get', {
             params: {
                 page: 2
             }
@@ -126,7 +128,7 @@ const Vm_container = new Vue({
             })
             this.latestList = tempData;
         });
-        axios.get('http://192.168.0.5:1721/api/comment/get', {
+        axios.get('http://127.0.0.1:1721/api/comment/get', {
             params: {
                 parentId: id
             }
@@ -137,7 +139,7 @@ const Vm_container = new Vue({
             })
             this.commentList = newComments.reverse()
             this.commentNum = this.commentList.length
-        })
+        });
     }
 })
 
@@ -148,14 +150,14 @@ const Vm_footer = new Vue({
         goodList: []
     },
     created() {
-        axios.get('http://192.168.0.5:1721/api/article/get', { params: { limit: 2 } }).then(article => {
+        axios.get('http://127.0.0.1:1721/api/article/get', { params: { limit: 2 } }).then(article => {
             const tempData = article.data.data.datas;
             tempData.forEach(item => {
                 item.publishDate = getDate(item.publishDate)
             })
             this.footerlist = tempData;
         })
-        axios.get('http://192.168.0.5:1721/api/article/getBytag', { params: { tag: '好物推荐', limit: 12 } }).then(article => {
+        axios.get('http://127.0.0.1:1721/api/article/getBytag', { params: { tag: '后端', limit: 9 } }).then(article => {
             this.goodList = article.data.data.datas;
         })
     }

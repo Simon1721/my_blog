@@ -8,7 +8,7 @@ module.exports = sequelize.define('Article', {
         allowNull: false
     },
     imgurl: {
-        type: DadaTypes.STRING,
+        type: DadaTypes.TEXT,
         allowNull: false
     },
     content: {
