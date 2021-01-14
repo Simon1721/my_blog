@@ -26,9 +26,9 @@ module.exports = sequelize.define('Article', {
     publishDate:{
         type: DadaTypes.DATE,
         allowNull: false,
-        get(){
-            return this.getDataValue('publishDate').getTime();
-        }
+        // get(){
+        //     return this.getDataValue('publishDate').getTime();
+        // }
     }
 }, {
     paranoid: true

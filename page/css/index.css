@@ -408,7 +408,7 @@ p {
   clear: both;
 }
 
-.new-article .left .new:hover img {
+.new-article .left .new:hover .img img {
   transform: scale(1.2);
 }
 
@@ -424,7 +424,7 @@ p {
   overflow: hidden;
 }
 
-.new-article .left .new .img img {
+.new-article .left .new .img  img {
   width: 100%;
   height: 100%;
   transition: all 0.5s;
