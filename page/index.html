@@ -22,11 +22,11 @@
       <div class="header">
         <div class="logo">Blog</div>
         <ul>
-          <li class="active"><a href="/index.html">主页</a></li>
+          <li class="active"><a>主页</a></li>
           <li><a href="/about.html" target="_blank">关于我</a></li>
-          <li><a href="" target="_blank">前端</a></li>
-          <li><a href="" target="_blank">后端</a></li>
-          <li><a href="" target="_blank">留言</a></li>
+          <li><a href="/qianduan.html" target="_blank">前端</a></li>
+          <li><a href="/houduan.html" target="_blank">后端</a></li>
+          <li><a href="/liuyan.html" target="_blank">留言</a></li>
         </ul>
         <div class="search">
           <input type="text" placeholder="请输入关键词查找" />
@@ -72,7 +72,7 @@
         </div>
         <div id="cards">
           <ul class="cards" :style="{left:left + 'px'}">
-            <li v-for="good in goodList" :key="good.id">
+            <li v-for="good in tuijianLsit" :key="good.id">
               <a :href="good.link" target="_blank">
                 <div class="img">
                   <img :src="good.imgurl" :alt="good.name" :title="good.name"/>
@@ -209,7 +209,7 @@
         <p>
           大喜大悲看清自己，大起大落看清朋友。没有一个足够宽容的心，就看不到一个春光明媚的世界
         </p>
-        <ul :style="{left:jingLeft + 'px',transition:transition}">
+        <ul :style="{left:jingLeft + 'px',transition:transition}" class="swiper-list">
           <li v-for="(jing,index) in jingList" :key="index">
             <a :href="jing.link" target="_blank">
               <div>
@@ -219,6 +219,12 @@
               </div>
             </a>
           </li>
+        </ul>
+        <ul class="xiabiao" ref="xiabiao">
+          <li id="bgc"></li>
+          <li></li>
+          <li></li>
+          <li></li>
         </ul>
       </div>
       <ul class="img-list">

@@ -37,7 +37,8 @@ artRouter.get('/getById', async (req, res) => {
 
 //获取全部文章
 artRouter.get('/getAll', async (req, res) => {
-    const result = await artServ.findArticleAll();
+    const keyword = req.query.tag || '';
+    const result = await artServ.findArticleAll(keyword);
     result.forEach(item=>{
         item.link = '/blog_datail.html?id=' + item.id;
     })

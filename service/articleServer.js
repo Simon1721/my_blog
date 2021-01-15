@@ -40,12 +40,12 @@ exports.addArticle = async function (artobj) {
                 maximum: 20
             }
         },
-        publishDate:{
+        publishDate: {
             presence: {
                 allowEmpty: false
             },
-            datetime:{
-                dateOnly:true,
+            datetime: {
+                dateOnly: true,
             }
         }
     }
@@ -97,7 +97,7 @@ exports.findArticle = async function (keyword, page = 1, limit = 6) {
             name: {
                 [Op.like]: `%${keyword}%`
             },
-            tag:{
+            tag: {
                 [Op.like]: `%${keyword}%`
             },
         },
@@ -143,7 +143,15 @@ exports.findArticleByTag = async function (tag, page = 1, limit = 6) {
 /**
  * 查询所有文章
  */
-exports.findArticleAll = async function () {
-    const result = await article.findAll()
+exports.findArticleAll = async function (keyword) {
+    let where = {}
+    if (keyword) {
+        where.tag = {
+            [Op.like]: `%${keyword}%`
+        }
+    }
+    const result = await article.findAll({
+        where,
+    })
     return JSON.parse(JSON.stringify(result))
 };

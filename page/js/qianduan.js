@@ -2,24 +2,6 @@ function getDate(date) {
     return new Date(date).toLocaleDateString().replace(/\//g, '-')
 }
 
-const Vm_article = new Vue({
-    el: '#article',
-    data: {
-        hotArtList: [],
-
-    },
-    created() {
-        axios.get('http://127.0.0.1:1721/api/article/get').then(article => {
-            const tempData = article.data.data.datas;
-            tempData.forEach(item => {
-                item.publishDate = getDate(item.publishDate)
-            })
-            this.hotArtList = tempData;
-        });
-
-    }
-})
-
 const Vm_container = new Vue({
     el: '#container',
     data: {
@@ -29,11 +11,6 @@ const Vm_container = new Vue({
             currentPage: 1,
         },
         goodArtList: [],
-        tuijianLsit: [],
-        left: 0,
-        jingLeft: 0,
-        xiabiaoIndex: 0,
-        transition: `all 1s cubic-bezier(0.25,0.1,0.25,1)`,
         newArtList: [],
         latestList: [],
         jingList: [],
@@ -47,22 +24,10 @@ const Vm_container = new Vue({
         ]
     },
     methods: {
-        changePage(type) {
-            if (type === 'prev') {
-                if (this.left == 300 * this.tuijianLsit.length / 2 || this.left == 0) {
-                    return
-                }
-                this.left += 300;
-            } else {
-                if (this.left == -300 * this.tuijianLsit.length / 2) {
-                    return
-                }
-                this.left -= 300;
-            }
-        },
         nextChange(val) {
-            axios.get('http://127.0.0.1:1721/api/article/get', {
+            axios.get('http://127.0.0.1:1721/api/article/getBytag', {
                 params: {
+                    tag:'web前端',
                     page: val,
                     limit: this.pagintionData.newLimit
                 }
@@ -72,8 +37,9 @@ const Vm_container = new Vue({
             });
         },
         prevChange(val) {
-            axios.get('http://127.0.0.1:1721/api/article/get', {
+            axios.get('http://127.0.0.1:1721/api/article/getBytag', {
                 params: {
+                    tag:'web前端',
                     page: val,
                     limit: this.pagintionData.newLimit
                 }
@@ -83,8 +49,9 @@ const Vm_container = new Vue({
             });
         },
         currentChange(val) {
-            axios.get('http://127.0.0.1:1721/api/article/get', {
+            axios.get('http://127.0.0.1:1721/api/article/getBytag', {
                 params: {
+                    tag:'web前端',
                     page: val,
                     limit: this.pagintionData.newLimit
                 }
@@ -93,41 +60,8 @@ const Vm_container = new Vue({
                 this.newArtList = arrData
             });
         },
-        swiper() {
-            const len = this.$refs.xiabiao.children.length
-            this.timer = setInterval(() => {
-                if (this.jingLeft <= -4760) {
-                    this.transition = 'none';
-                    this.jingLeft = 0;
-                    this.xiabiaoIndex = 0;
-                } else {
-                    this.xiabiaoIndex++;
-                    this.transition = 'all 1s cubic-bezier(0.25,0.1,0.25,1)';
-                    this.jingLeft -= 1190;
-                }
-                for (let i = 0; i < len; i++) {
-                    this.$refs.xiabiao.children[i].id = '';
-                }
-                this.$refs.xiabiao.children[this.xiabiaoIndex % len].id = 'bgc';
-            }, 5000)
-        }
     },
     created() {
-        this.$nextTick(() => {
-            this.swiper()
-        })
-        axios.get('http://127.0.0.1:1721/api/article/getByTag', {
-            params: {
-                tag: '推荐',
-                limit: 8
-            }
-        }).then(article => {
-            const tempData = article.data.data.datas;
-            tempData.forEach(item => {
-                item.publishDate = getDate(item.publishDate)
-            })
-            this.tuijianLsit = tempData;
-        })
         axios.get('http://127.0.0.1:1721/api/article/getByTag', {
             params: {
                 tag: '后端',
@@ -142,19 +76,11 @@ const Vm_container = new Vue({
         });
         axios.get('http://127.0.0.1:1721/api/article/getByTag', {
             params: {
-                tag: '前端框架',
-                limit: 4
+                tag: 'web前端', limit: this.pagintionData.newLimit
             }
         }).then(article => {
-            const tempData = article.data.data.datas;
-            tempData.forEach(item => {
-                item.publishDate = getDate(item.publishDate)
-            })
-            this.jingList = tempData;
-            this.jingList.push(this.jingList[0])
-        });
-        axios.get('http://127.0.0.1:1721/api/article/get', { params: { limit: this.pagintionData.newLimit } }).then(article => {
             const arrData = article.data.data.datas;
+            console.log(arrData);
             this.newArtList = arrData
         });
         axios.get('http://127.0.0.1:1721/api/article/get', {
@@ -168,8 +94,13 @@ const Vm_container = new Vue({
             })
             this.latestList = tempData;
         });
-        axios.get('http://127.0.0.1:1721/api/article/getAll').then(article => {
+        axios.get('http://127.0.0.1:1721/api/article/getAll',{
+            params:{
+                tag:'web前端'
+            }
+        }).then(article => {
             const arrData = article.data.data;
+            console.log(arrData);
             this.pagintionData.newTotal = arrData.length
         })
     }
