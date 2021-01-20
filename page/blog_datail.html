@@ -6,15 +6,11 @@
     <title>我的博客毕设</title>
     <link rel="stylesheet" href="./css/datail.css" />
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
-    />
+    
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="//at.alicdn.com/t/font_2288416_1gw1zznuqj4.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="//at.alicdn.com/t/font_2288416_8e58urhoxet.js"></script>
   </head>
   <body id="top">
     <!-- 头部导航 -->
@@ -30,7 +26,11 @@
         </ul>
         <div class="search">
           <input type="text" placeholder="请输入关键词查找" />
-          <button>搜索</button>
+          <button style="font-size: 16px;">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-xingtaiduICON_sousuo--"></use>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -280,9 +280,11 @@
             <h2>算法推荐</h2>
             <ul class="good-list">
               <li v-for="goodImg in goodList" :key="goodImg.id">
-                <div class="img">
-                  <img :src="goodImg.imgurl" :alt="goodImg.name" />
-                </div>
+                <a :href="goodImg.link" target="_blank">
+                  <div class="img">
+                    <img :src="goodImg.imgurl" :alt="goodImg.name" />
+                  </div>
+                </a>
               </li>
             </ul>
           </div>

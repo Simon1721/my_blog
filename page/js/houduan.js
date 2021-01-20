@@ -80,7 +80,6 @@ const Vm_container = new Vue({
             }
         }).then(article => {
             const arrData = article.data.data.datas;
-            console.log(arrData);
             this.newArtList = arrData
         });
         axios.get('http://127.0.0.1:1721/api/article/get', {
@@ -100,7 +99,6 @@ const Vm_container = new Vue({
             }
         }).then(article => {
             const arrData = article.data.data;
-            console.log(arrData);
             this.pagintionData.newTotal = arrData.length
         })
     }

@@ -14,6 +14,8 @@ app.use('/api/article',require('./api/Article'))
 
 app.use('/api/comment',require('./api/Comment'))
 
+app.use('/api/liuyan',require('./api/Liuyan'))
+
 app.listen('1721',()=>{
     console.log('listen port on 1721');
 })    

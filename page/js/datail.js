@@ -31,7 +31,7 @@ function getCommentTime(date) {
 const Vm_container = new Vue({
     el: '#container',
     data: {
-        timer:null,
+        timer: null,
         title: '',
         commentText: '',
         replyName: '',
@@ -54,7 +54,10 @@ const Vm_container = new Vue({
     },
     methods: {
         publishComment() {
-            console.log(this.commentText);
+            if (!this.commentText) {
+                alert(`${type}内容不能为空`);
+                return;
+            }
             const type = this.$refs.submit.innerHTML;
             axios({
                 method: 'post',
@@ -67,14 +70,21 @@ const Vm_container = new Vue({
                     content: this.commentText,
                     imgurl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3155998395,3600507640&fm=26&gp=0.jpg'
                 }
-            }).then(res => {
-                if (JSON.stringify(res.data.data) == '{}') {
-                    alert(`${type}内容不能为空`)
-                } else {
-                    alert(`${type}评论成功`)
-                    this.commentText = '';
-                    location.reload()
-                }
+            }).then(() => {
+                alert(`${type}评论成功`)
+                this.commentText = '';
+                axios.get('http://127.0.0.1:1721/api/comment/get', {
+                    params: {
+                        parentId: id
+                    }
+                }).then(comments => {
+                    const newComments = comments.data.data;
+                    newComments.forEach(item => {
+                        item.publishDate = getCommentTime(item.publishDate)
+                    })
+                    this.commentList = newComments.reverse()
+                    this.commentNum = this.commentList.length
+                });
             })
         },
         reply(replyName) {
@@ -157,7 +167,7 @@ const Vm_footer = new Vue({
             })
             this.footerlist = tempData;
         })
-        axios.get('http://127.0.0.1:1721/api/article/getBytag', { params: { tag: '后端', limit: 9 } }).then(article => {
+        axios.get('http://127.0.0.1:1721/api/article/getBytag', { params: { tag: '算法', limit: 9 } }).then(article => {
             this.goodList = article.data.data.datas;
         })
     }

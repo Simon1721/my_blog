@@ -358,7 +358,9 @@ li {
 .right .art-search input {
   width: 230px;
   height: 43px;
-  border: 1px solid#4c4c4c;
+  border: 1px solid #4299e1;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   box-sizing: border-box;
   padding: 0 15px;
   outline: none;
@@ -369,7 +371,9 @@ li {
   height: 43px;
   background-color: #4299e1;
   outline: none;
-  border: none;
+  border: 1px solid #4299e1;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   color: white;
 }
 

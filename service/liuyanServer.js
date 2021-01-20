@@ -1,19 +1,19 @@
 const validate = require('validate.js');
-const comment = require('../dao/comments');
+const liuyan = require('../dao/liuyans');
 // const {Op} = require('sequelize');
 
 /**
- * 添加一条评论
+ * 添加一条留言
  * @param {*} comtObj 
  */
-exports.addComment = async function (comtObj) {
+exports.addLiuyan = async function (obj) {
     const rule={
         parentId:{
             presence:{
                 allowEmpty:false
             },
         },
-        parentName:{
+        name:{
             presence:{
                 allowEmpty:false
             },
@@ -36,18 +36,12 @@ exports.addComment = async function (comtObj) {
                 allowEmpty:false
             },
             type:'string'
-        },
-        ArticleId:{
-            presence:{
-                allowEmpty:false
-            },
-            numericality:'strict'
         }
     }
-    const _comtObj = validate(comtObj,rule)
+    const _comtObj = validate(obj,rule)
     // console.log(_comtObj);
     if(!_comtObj){
-        const result = await comment.create(comtObj);
+        const result = await liuyan.create(obj);
         return result.toJSON()
     }
     return new Error('评论格式错误，请检查后重试')
@@ -55,11 +49,11 @@ exports.addComment = async function (comtObj) {
 
 
 /**
- * 删除一条评论
+ * 删除一条留言
  * @param {*} id 
  */
-exports.deletedComment = async function (id) {
-    const result = await comment.destroy({
+exports.deletedLiuyan = async function (id) {
+    const result = await liuyan.destroy({
         where:{
             id
         }
@@ -69,11 +63,11 @@ exports.deletedComment = async function (id) {
 
 
 /**
- * 查找评论
+ * 查找留言
  * @param {*} parentId 
  */
-exports.findComment = async function (parentId){
-    const result = await comment.findAll({
+exports.findLiuyan = async function (parentId){
+    const result = await liuyan.findAll({
         where:{
             parentId,
         }

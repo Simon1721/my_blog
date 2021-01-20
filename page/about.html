@@ -4,17 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>关注我不迷路~</title>
-    <link rel="stylesheet" href="./css/datail.css" />
+    <link rel="stylesheet" href="./css/about.css" />
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
-    />
-
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="//at.alicdn.com/t/font_2288416_8e58urhoxet.js"></script>
+    
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="//at.alicdn.com/t/font_2288416_1gw1zznuqj4.js"></script>
+    
   </head>
   <body id="top">
     <!-- 头部导航 -->
@@ -30,7 +26,11 @@
         </ul>
         <div class="search">
           <input type="text" placeholder="请输入关键词查找" />
-          <button>搜索</button>
+          <button style="font-size: 16px;">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-xingtaiduICON_sousuo--"></use>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
           <div class="img-title">
             <img src="https://ccdn.goodq.top/caches/3ddfe819fbff4df42c2816872195b7de/aHR0cHM6Ly81ZDQyNDBiMjU4OWM5LnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDcvOTgzMTAxOTgyMDg3OTgzMzllNWNlZWVhOWNmNWViZGMtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp" alt="" />
           </div>
-          <h1 style="margin-top: 20px;font-size: 28px;">你的每一刻，都值得记录</h1>
+          <h1 style="margin-top: 20px;font-size: 28px; padding: 20px 30px;">你的每一刻，都值得记录</h1>
           <div style="color: #727272;text-indent: 2em; padding: 20px 30px; line-height: 1.5em; font-size: 15px;">
             <p>
               人的一生难免遇上风风雨雨和艰辛，面对日常生活的随之而来不如意，不必心怀不满、怨气冲天，也无须耿耿于怀、意志消沉。是福是祸，都得直面；是好是坏，一定会过去了。与其每天背负着包袱低头遭罪，远不如放下包袱享受人生；相比徒劳地埋怨人的命运不公平，还不如自己从容淡定地笑看人生。学会放弃，人生之路才会越走越宽。
@@ -239,9 +239,11 @@
             <h2>算法推荐</h2>
             <ul class="good-list">
               <li v-for="goodImg in goodList" :key="goodImg.id">
-                <div class="img">
-                  <img :src="goodImg.imgurl" :alt="goodImg.name" />
-                </div>
+                <a :href="goodImg.link" target="_blank">
+                  <div class="img">
+                    <img :src="goodImg.imgurl" :alt="goodImg.name" />
+                  </div>
+                </a>
               </li>
             </ul>
           </div>
@@ -263,6 +265,6 @@
         </div>
       </div>
     </div>
-    <script src="./js/datail.js"></script>
+    <script src="./js/about.js"></script>
   </body>
 </html>
