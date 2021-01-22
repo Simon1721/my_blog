@@ -2,6 +2,13 @@ function getDate(date) {
     return new Date(date).toLocaleDateString().replace(/\//g, '-')
 }
 
+const query = window.location.search
+const index = query.indexOf('=')
+const keyword = query.toString().substring(index + 1);
+
+document.querySelector('title').innerHTML = keyword + ' 搜索结果';
+document.querySelector('#search-input').setAttribute('placeholder',keyword);
+
 new Vue({
     el:'#search',
     data:{
@@ -10,7 +17,7 @@ new Vue({
     },
     methods:{
         search(){
-            this.link = '/search.html?wd=' + this.searchKeyword
+            window.location.search = '?wd=' + this.searchKeyword
         }
     }
 
@@ -19,8 +26,6 @@ new Vue({
 const Vm_container = new Vue({
     el: '#container',
     data: {
-        searchKeyword:'',
-        link:'',
         pagintionData: {
             newLimit: 6,
             newTotal: 1,
@@ -29,7 +34,6 @@ const Vm_container = new Vue({
         goodArtList: [],
         newArtList: [],
         latestList: [],
-        jingList: [],
         imglist: [
             'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1454112772,3551117385&fm=26&gp=0.jpg',
             'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2284371541,2908510499&fm=26&gp=0.jpg',
@@ -37,16 +41,14 @@ const Vm_container = new Vue({
             'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2880386374,3113509207&fm=15&gp=0.jpg',
             'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2899174962,3626239562&fm=26&gp=0.jpg',
             'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2299614506,588028401&fm=26&gp=0.jpg',
-        ]
+        ],
+        notFound:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1577371945,1270849504&fm=26&gp=0.jpg'
     },
     methods: {
-        search(){
-            this.link = '/search.html?wd=' + this.searchKeyword
-        },
         nextChange(val) {
-            axios.get('http://127.0.0.1:1721/api/article/getBytag', {
+            axios.get('http://127.0.0.1:1721/api/article/get', {
                 params: {
-                    tag:'web前端',
+                    keyword,
                     page: val,
                     limit: this.pagintionData.newLimit
                 }
@@ -56,9 +58,9 @@ const Vm_container = new Vue({
             });
         },
         prevChange(val) {
-            axios.get('http://127.0.0.1:1721/api/article/getBytag', {
+            axios.get('http://127.0.0.1:1721/api/article/get', {
                 params: {
-                    tag:'web前端',
+                    keyword,
                     page: val,
                     limit: this.pagintionData.newLimit
                 }
@@ -68,9 +70,9 @@ const Vm_container = new Vue({
             });
         },
         currentChange(val) {
-            axios.get('http://127.0.0.1:1721/api/article/getBytag', {
+            axios.get('http://127.0.0.1:1721/api/article/get', {
                 params: {
-                    tag:'web前端',
+                    keyword,
                     page: val,
                     limit: this.pagintionData.newLimit
                 }
@@ -93,10 +95,11 @@ const Vm_container = new Vue({
             })
             this.goodArtList = tempData;
         });
-        axios.get('http://127.0.0.1:1721/api/article/getByTag', {
-            params: {
-                tag: 'web前端', limit: this.pagintionData.newLimit
-            }
+        axios.get('http://127.0.0.1:1721/api/article/get', { 
+            params: { 
+                keyword,
+                limit: this.pagintionData.newLimit 
+            } 
         }).then(article => {
             const arrData = article.data.data.datas;
             this.newArtList = arrData
@@ -112,13 +115,13 @@ const Vm_container = new Vue({
             })
             this.latestList = tempData;
         });
-        axios.get('http://127.0.0.1:1721/api/article/getAll',{
+        axios.get('http://127.0.0.1:1721/api/article/get',{
             params:{
-                tag:'web前端'
+                keyword,
             }
         }).then(article => {
             const arrData = article.data.data;
-            this.pagintionData.newTotal = arrData.length
+            this.pagintionData.newTotal = arrData.total
         })
     }
 })

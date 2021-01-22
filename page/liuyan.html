@@ -25,12 +25,14 @@
           <li><a href="/houduan.html" target="_blank">后端</a></li>
           <li class="active"><a>留言</a></li>
         </ul>
-        <div class="search">
-          <input type="text" placeholder="请输入关键词查找" />
-          <button style="font-size: 16px;">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-xingtaiduICON_sousuo--"></use>
-            </svg>
+        <div id="search" class="search">
+          <input type="text" placeholder="请输入关键词查找" v-model="searchKeyword" />
+          <button style="font-size: 16px;"  @click="search">
+            <a :href="link" target="_blank">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-xingtaiduICON_sousuo--"></use>
+              </svg>
+            </a>
           </button>
         </div>
       </div>
@@ -155,8 +157,10 @@
           <div class="art-search">
             <h2>文章搜索</h2>
             <div class="search">
-              <input type="text" placeholder="请输入需要搜索的文字" />
-              <button>搜索</button>
+              <input type="text" placeholder="请输入需要搜索的文字" v-model="searchKeyword"/>
+              <a :href="link" target="_blank">
+                <button @click="search">搜索</button>
+              </a>
             </div>
           </div>
           <!-- 好物推荐 -->

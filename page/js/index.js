@@ -1,12 +1,24 @@
 function getDate(date) {
     return new Date(date).toLocaleDateString().replace(/\//g, '-')
 }
+new Vue({
+    el:'#search',
+    data:{
+        searchKeyword:'',
+        link:'',
+    },
+    methods:{
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        }
+    }
+
+})
 
 const Vm_article = new Vue({
     el: '#article',
     data: {
         hotArtList: [],
-
     },
     created() {
         axios.get('http://127.0.0.1:1721/api/article/get').then(article => {
@@ -23,6 +35,8 @@ const Vm_article = new Vue({
 const Vm_container = new Vue({
     el: '#container',
     data: {
+        searchKeyword:'',
+        link:'',
         pagintionData: {
             newLimit: 6,
             newTotal: 1,
@@ -47,6 +61,9 @@ const Vm_container = new Vue({
         ]
     },
     methods: {
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        },
         changePage(type) {
             if (type === 'prev') {
                 if (this.left == 300 * this.tuijianLsit.length / 2 || this.left == 0) {

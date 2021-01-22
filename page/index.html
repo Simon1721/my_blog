@@ -1,351 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>我的博客毕设</title>
-    <link rel="stylesheet" href="./css/index.css" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
-    />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    
-    <script src="./js/vue.min.js"></script>
-    <script src="./js/axios.min.js"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script src="//at.alicdn.com/t/font_2288416_1gw1zznuqj4.js"></script>
 
-  </head>
-  <body id="top">
-    <!-- 头部导航 -->
-    <div class="top">
-      <div class="header">
-        <div class="logo">Blog</div>
-        <ul>
-          <li class="active"><a>主页</a></li>
-          <li><a href="/about.html" target="_blank">关于我</a></li>
-          <li><a href="/qianduan.html" target="_blank">前端</a></li>
-          <li><a href="/houduan.html" target="_blank">后端</a></li>
-          <li><a href="/liuyan.html" target="_blank">留言</a></li>
-        </ul>
-        <div class="search">
-          <input type="text" placeholder="请输入关键词查找" />
-          <button style="font-size: 16px;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的博客</title>
+  <link rel="stylesheet" href="./css/index.css" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+  <script src="./js/vue.min.js"></script>
+  <script src="./js/axios.min.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="//at.alicdn.com/t/font_2288416_1gw1zznuqj4.js"></script>
+
+</head>
+
+<body id="top">
+  <!-- 头部导航 -->
+  <div id="top">
+    <div class="header">
+      <div class="logo">Blog</div>
+      <ul>
+        <li class="active"><a>主页</a></li>
+        <li><a href="/about.html" target="_blank">关于我</a></li>
+        <li><a href="/qianduan.html" target="_blank">前端</a></li>
+        <li><a href="/houduan.html" target="_blank">后端</a></li>
+        <li><a href="/liuyan.html" target="_blank">留言</a></li>
+      </ul>
+      <div id="search" class="search">
+        <input type="text" placeholder="请输入关键词查找" v-model="searchKeyword" />
+        <button style="font-size: 16px;"  @click="search">
+          <a :href="link" target="_blank">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-xingtaiduICON_sousuo--"></use>
             </svg>
-          </button>
-        </div>
+          </a>
+        </button>
       </div>
     </div>
-    <!-- 热门文章 -->
-    <div class="hot-article">
-      <div class="info">
-        <span>互联网</span>
-        <p>小众只是切入点，<br />而远方也不是我的终点</p>
-      </div>
-      <div id="article" class="article">
-        <h3>最新文章</h3>
-        <div class="art-list" v-for="art in hotArtList" :key="art.id">
+  </div>
+  <!-- 热门文章 -->
+  <div class="hot-article">
+    <div class="info">
+      <span>互联网</span>
+      <p>小众只是切入点，<br />而远方也不是我的终点</p>
+    </div>
+    <div id="article" class="article">
+      <h3>最新文章</h3>
+      <div class="art-list" v-for="art in hotArtList" :key="art.id">
         <a :href="art.link" target="_blank">
           <div class="img-info">
-            <img :src="art.imgurl" :alt="art.name" :title="art.name"/>
+            <img :src="art.imgurl" :alt="art.name" :title="art.name" />
           </div>
           <p class="titel">{{art.name}}</p>
-          <span class="date"
-            >发布日期: {{ art.publishDate }}</span
-          >
+          <span class="date">发布日期: {{ art.publishDate }}</span>
         </a>
+      </div>
+    </div>
+  </div>
+  <!-- 轮播图 -->
+  <div class="swiper"></div>
+  <!-- 内容区 -->
+  <div id="container" class="container">
+    <!-- 精品推荐 -->
+    <div class="products-recommend">
+      <h2>精品推荐</h2>
+      <p>
+        大喜大悲看清自己，大起大落看清朋友。没有一个足够宽容的心，就看不到一个春光明媚的世界
+      </p>
+      <div class="left-btn iconfont" @click="changePage('prev')">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-jiantou1"></use>
+        </svg>
+      </div>
+      <div id="cards">
+        <ul class="cards" :style="{left:left + 'px'}">
+          <li v-for="good in tuijianLsit" :key="good.id">
+            <a :href="good.link" target="_blank">
+              <div class="img">
+                <img :src="good.imgurl" :alt="good.name" :title="good.name" />
+              </div>
+              <div class="info">
+                <p class="titel">{{ good.name }}</p>
+                <p class="date">发布日期: {{ good.publishDate }}</p>
+                <p class="text-info" v-html="good.content"></p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="right-btn iconfont" @click="changePage('next')">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-jiantou"></use>
+        </svg>
+      </div>
+    </div>
+    <!-- 最新文章 -->
+    <div id="new-article" class="new-article">
+      <div class="left">
+        <div class="new" v-for="newart in newArtList" :key="newart.id">
+          <a :href="newart.link" target="_blank">
+            <div>
+              <div class="img">
+                <img :src="newart.imgurl" :alt="newart.name" :title="newart.name" />
+              </div>
+              <p class="titel">{{ newart.name }}</p>
+              <p class="info" v-html="newart.content"></p>
+              <span>阅读正文></span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="right">
+        <div class="focus-us">
+          <h2>关注我</h2>
+          <div class="focus">
+            <a href="https://github.com/Simon1721?tab=repositories" target="_blank" title="点击跳转到蒋雄的github">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-github"></use>
+              </svg>
+            </a>
+            <a href="https://wx.qq.com/" target="_blank" title="点击跳转">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-weixin"></use>
+              </svg>
+            </a>
+            <a href="https://user.qzone.qq.com/943417190/infocenter" target="_blank" title="点击跳转到蒋雄的QQ空间">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-qq"></use>
+              </svg>
+            </a>
+            <a href="https://weibo.com/5887058001/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank"
+              title="点击跳转到蒋雄的微博">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-weibo"></use>
+              </svg>
+            </a>
+            <a href="https://baike.baidu.com/item/Facebook/7449587?fr=aladdin" target="_blank"
+              title="不好意思，中国大陆暂时不能正常访问facebook">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-facebook"></use>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="article">
+          <h2>热门文章</h2>
+          <div class="art-list" v-for="latest in latestList" :key="latest.id">
+            <a :href="latest.link" target="_blank">
+              <div>
+                <div class="img-info">
+                  <img :src="latest.imgurl" :alt="latest.name" :title="latest.name" />
+                </div>
+                <p class="titel">{{ latest.name }}</p>
+                <span class="date">发布日期: {{ latest.publishDate }}</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- 文章搜索 -->
+        <div class="art-search">
+          <h2>文章搜索</h2>
+          <div class="search">
+            <input type="text" placeholder="请输入需要搜索的文字" v-model="searchKeyword"/>
+            <a :href="link" target="_blank">
+              <button @click="search">搜索</button>
+            </a>
+          </div>
+        </div>
+        <!-- 好文推荐 -->
+        <div class="good-recommend">
+          <h2>好文推荐</h2>
+          <ul class="good-list">
+            <li v-for="goodImg in goodArtList" :key="goodImg.id">
+              <a :href="goodImg.link" target="_blank">
+                <div class="img">
+                  <img :src="goodImg.imgurl" :title="goodImg.name" />
+                </div>
+              </a>
+            </li>
+          </ul>
+          <div class="obscuration">
+            <div class="tem"></div>
+            <div class="surface">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-weibo"></use>
+              </svg>
+              <span>关注我的微博@Closer丶sky</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- 轮播图 -->
-    <div class="swiper"></div>
-    <!-- 内容区 -->
-    <div id="container" class="container">
-      <!-- 精品推荐 -->
-      <div class="products-recommend">
-        <h2>精品推荐</h2>
-        <p>
-          大喜大悲看清自己，大起大落看清朋友。没有一个足够宽容的心，就看不到一个春光明媚的世界
-        </p>
-        <div class="left-btn iconfont" @click="changePage('prev')">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-jiantou1"></use>
-          </svg>
+    <!-- 翻页插件 -->
+    <a href="#new-article">
+      <div class="page">
+        <el-pagination background layout="prev, pager, next" prev-text="上一页" next-text="下一页"
+          :total="pagintionData.newTotal" :page-size="pagintionData.newLimit" :current-page="pagintionData.currentPage"
+          @next-click="nextChange" @prev-click="prevChange" @current-change="currentChange">
+        </el-pagination>
+    </a>
+  </div>
+  <hr style="color: #c4c4c4;" />
+  <!-- 流行框架 -->
+  <div class="tuijian-list">
+    <h2>前端流行框架</h2>
+    <p>
+      大喜大悲看清自己，大起大落看清朋友。没有一个足够宽容的心，就看不到一个春光明媚的世界
+    </p>
+    <ul :style="{left:jingLeft + 'px',transition:transition}" class="swiper-list">
+      <li v-for="(jing,index) in jingList" :key="index">
+        <a :href="jing.link" target="_blank">
+          <div>
+            <div class="img">
+              <img :src="jing.imgurl" :alt="jing.name" :title="jing.name" />
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+    <ul class="xiabiao" ref="xiabiao">
+      <li id="bgc"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <ul class="img-list">
+    <li v-for="Img in imglist">
+      <div class="img">
+        <img :src="Img" alt="" />
+      </div>
+    </li>
+  </ul>
+  </div>
+  <!-- 回到顶部 -->
+  <a href="#top">
+    <div class="backTop">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-huidaodingbu"></use>
+      </svg>
+    </div>
+  </a>
+  <div id="footer" class="footer">
+    <!-- 页底信息 -->
+    <div class="blog-info">
+      <div class="blog">
+        <div class="blog-logo">
+          <div class="logo">Blog</div>
+          <p>
+            人们常觉得准备的阶段是在浪费时间，只有当真正机会来临，而自己没有能力把握的时候，才能觉悟自己平时没有准备才是浪费了时间... </p>
+          <ul>
+            <li>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-github"></use>
+              </svg>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-weixin"></use>
+              </svg>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-qq"></use>
+              </svg>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-weibo"></use>
+              </svg>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-facebook"></use>
+              </svg>
+            </li>
+          </ul>
         </div>
-        <div id="cards">
-          <ul class="cards" :style="{left:left + 'px'}">
-            <li v-for="good in tuijianLsit" :key="good.id">
-              <a :href="good.link" target="_blank">
-                <div class="img">
-                  <img :src="good.imgurl" :alt="good.name" :title="good.name"/>
+        <div class="article">
+          <h2>最新文章</h2>
+          <div class="art-list" v-for="footerart in footerlist" :key="footerart.id">
+            <a :href="footerart.link" target="_blank">
+              <div>
+                <div class="img-info">
+                  <img :src="footerart.imgurl" :alt="footerart.name" :title="footerart.name" />
                 </div>
-                <div class="info">
-                  <p class="titel">{{ good.name }}</p>
-                  <p class="date">发布日期: {{ good.publishDate }}</p>
-                  <p class="text-info">{{ good.content }}</p>
+                <p class="titel">{{ footerart.name }}</p>
+                <span class="date">发布日期: {{ footerart.publishDate }}</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="good-recommend">
+          <h2>算法推荐</h2>
+          <ul class="good-list">
+            <li v-for="goodImg in goodList" :key="goodImg.id">
+              <a :href="goodImg.link" target="_blank">
+                <div class="img">
+                  <img :src="goodImg.imgurl" :title="goodImg.name" />
                 </div>
               </a>
             </li>
           </ul>
         </div>
-        <div class="right-btn iconfont" @click="changePage('next')">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-jiantou"></use>
-          </svg>
-        </div>
-      </div>
-      <!-- 最新文章 -->
-      <div id="new-article" class="new-article">
-        <div class="left">
-          <div class="new" v-for="newart in newArtList" :key="newart.id">
-            <a :href="newart.link" target="_blank">
-              <div>
-                <div class="img">
-                  <img :src="newart.imgurl" :alt="newart.name" :title="newart.name"/>
-                </div>
-                <p class="titel">{{ newart.name }}</p>
-                <p class="info" v-html="newart.content"></p>
-                <span>阅读正文></span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="right">
-          <div class="focus-us">
-            <h2>关注我</h2>
-            <div class="focus">
-              <a href="https://github.com/Simon1721?tab=repositories" target="_blank" title="点击跳转到蒋雄的github">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-github"></use>
-                </svg>
-              </a>
-              <a href="https://wx.qq.com/" target="_blank" title="点击跳转">
-                <svg class="icon" aria-hidden="true"> 
-                  <use xlink:href="#icon-weixin"></use>
-                </svg>
-              </a>
-              <a href="https://user.qzone.qq.com/943417190/infocenter" target="_blank" title="点击跳转到蒋雄的QQ空间">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-qq"></use>
-                </svg>
-              </a>
-              <a href="https://weibo.com/5887058001/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="点击跳转到蒋雄的微博">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-weibo"></use>
-                </svg>
-              </a>
-              <a href="https://baike.baidu.com/item/Facebook/7449587?fr=aladdin" target="_blank" title="不好意思，中国大陆暂时不能正常访问facebook">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-facebook"></use>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div class="article">
-            <h2>热门文章</h2>
-            <div class="art-list" v-for="latest in latestList" :key="latest.id">
-              <a :href="latest.link" target="_blank">
-                <div>
-                  <div class="img-info">
-                    <img :src="latest.imgurl" :alt="latest.name" :title="latest.name"/>
-                  </div>
-                  <p class="titel">{{ latest.name }}</p>
-                  <span class="date">发布日期: {{ latest.publishDate }}</span>
-                </div>
-              </a>
-            </div>
-          </div>
-          <!-- 文章搜索 -->
-          <div class="art-search">
-            <h2>文章搜索</h2>
-            <div class="search">
-              <input type="text" placeholder="请输入需要搜索的文字" />
-              <button>搜索</button>
-            </div>
-          </div>
-          <!-- 好文推荐 -->
-          <div class="good-recommend">
-            <h2>好文推荐</h2>
-            <ul class="good-list">
-              <li v-for="goodImg in goodArtList" :key="goodImg.id">
-                <a :href="goodImg.link" target="_blank">
-                  <div class="img">
-                    <img :src="goodImg.imgurl" :title="goodImg.name" />
-                  </div>
-                </a>
-              </li>
-            </ul>
-            <div class="obscuration">
-              <div class="tem"></div>
-              <div class="surface">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-weibo"></use>
-                </svg>
-                <span>关注我的微博@Closer丶sky</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 翻页插件 -->
-      <a href="#new-article">
-      <div class="page">
-        <el-pagination 
-          background layout="prev, pager, next"
-          prev-text="上一页"
-          next-text="下一页" 
-          :total="pagintionData.newTotal" 
-          :page-size="pagintionData.newLimit" 
-          :current-page="pagintionData.currentPage"
-          @next-click="nextChange"
-          @prev-click="prevChange"
-          @current-change="currentChange"
-          >
-        </el-pagination>
-      </a>
-      </div>
-      <hr style="color: #c4c4c4;" />
-      <!-- 流行框架 -->
-      <div class="tuijian-list">
-        <h2>前端流行框架</h2>
-        <p>
-          大喜大悲看清自己，大起大落看清朋友。没有一个足够宽容的心，就看不到一个春光明媚的世界
-        </p>
-        <ul :style="{left:jingLeft + 'px',transition:transition}" class="swiper-list">
-          <li v-for="(jing,index) in jingList" :key="index">
-            <a :href="jing.link" target="_blank">
-              <div>
-                <div class="img">
-                  <img :src="jing.imgurl" :alt="jing.name" :title="jing.name"/>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <ul class="xiabiao" ref="xiabiao">
-          <li id="bgc"></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </div>
-      <ul class="img-list">
-        <li v-for="Img in imglist">
-            <div class="img">
-              <img :src="Img" alt="" />
-            </div>
-        </li>
-      </ul>
-    </div>
-    <!-- 回到顶部 -->
-    <a href="#top">
-      <div class="backTop">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-huidaodingbu"></use>
-        </svg>
-      </div>
-    </a>
-    <div id="footer" class="footer">
-      <!-- 页底信息 -->
-      <div class="blog-info">
-        <div class="blog">
-          <div class="blog-logo">
-            <div class="logo">Blog</div>
-            <p>
-              人们常觉得准备的阶段是在浪费时间，只有当真正机会来临，而自己没有能力把握的时候，才能觉悟自己平时没有准备才是浪费了时间...            </p>
-            <ul>
-              <li>
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-github"></use>
-                </svg>
-              </li>
-              <li>
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-weixin"></use>
-                </svg>
-              </li>
-              <li>
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-qq"></use>
-                </svg>
-              </li>
-              <li>
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-weibo"></use>
-                </svg>
-              </li>
-              <li>
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-facebook"></use>
-                </svg>
-              </li>
-            </ul>
-          </div>
-          <div class="article">
-            <h2>最新文章</h2>
-            <div
-              class="art-list"
-              v-for="footerart in footerlist"
-              :key="footerart.id"
-            >
-              <a :href="footerart.link" target="_blank">
-                <div>
-                  <div class="img-info">
-                    <img :src="footerart.imgurl" :alt="footerart.name" :title="footerart.name"/>
-                  </div>
-                  <p class="titel">{{ footerart.name }}</p>
-                  <span class="date"
-                    >发布日期: {{ footerart.publishDate }}</span
-                  >
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="good-recommend">
-            <h2>算法推荐</h2>
-            <ul class="good-list">
-              <li v-for="goodImg in goodList" :key="goodImg.id">
-                <a :href="goodImg.link" target="_blank">
-                  <div class="img">
-                    <img :src="goodImg.imgurl" :title="goodImg.name" />
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <hr />
-      <!-- 备案 -->
-      <div class="record-info">
-        <div class="record">
-          <span class="left"
-            >© 2020 Blog 版权所有 网站备案号:
-            京IPC备88888888-8号(纯属虚构)</span
-          >
-          <ul class="right">
-            <li>服务条款</li>
-            <li>隐私政策</li>
-            <li>法律申明</li>
-          </ul>
-        </div>
       </div>
     </div>
-    <script>
+    <hr />
+    <!-- 备案 -->
+    <div class="record-info">
+      <div class="record">
+        <span class="left">© 2020 Blog 版权所有 网站备案号:
+          京IPC备88888888-8号(纯属虚构)</span>
+        <ul class="right">
+          <li>服务条款</li>
+          <li>隐私政策</li>
+          <li>法律申明</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
     // 回到顶部按钮
-      const back = document.getElementsByClassName('backTop')[0];
-      window.addEventListener("scroll", function(event) {
-          var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-          if(scrollTop >= '1034'){
-            back.style.display = 'block'
-          }else{
-            back.style.display = 'none'
-          }
-      });
-    </script>
-    <script src="./js/index.js"></script>
-  </body>
+    const back = document.getElementsByClassName('backTop')[0];
+    window.addEventListener("scroll", function (event) {
+      var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+      if (scrollTop >= '1034') {
+        back.style.display = 'block'
+      } else {
+        back.style.display = 'none'
+      }
+    });
+  </script>
+  <script src="./js/index.js"></script>
+</body>
+
 </html>

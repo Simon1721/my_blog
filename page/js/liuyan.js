@@ -1,7 +1,24 @@
 const E = window.wangEditor;
+
+new Vue({
+    el:'#search',
+    data:{
+        searchKeyword:'',
+        link:'',
+    },
+    methods:{
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        }
+    }
+
+})
+
 new Vue({
     el: '#container',
     data: {
+        searchKeyword:'',
+        link:'',
         editor: null,
         goodArtList: [],
         latestList: [],
@@ -93,6 +110,10 @@ new Vue({
         })
     },
     methods: {
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        },
+        
         //辅助函数
         getDate(date) {
             return new Date(date).toLocaleDateString().replace(/\//g, '-')

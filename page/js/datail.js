@@ -28,9 +28,25 @@ function getCommentTime(date) {
     }
 }
 
+new Vue({
+    el:'#search',
+    data:{
+        searchKeyword:'',
+        link:'',
+    },
+    methods:{
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        }
+    }
+
+})
+
 const Vm_container = new Vue({
     el: '#container',
     data: {
+        searchKeyword:'',
+        link:'',
         timer: null,
         title: '',
         commentText: '',
@@ -53,6 +69,9 @@ const Vm_container = new Vue({
         ]
     },
     methods: {
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        },
         publishComment() {
             if (!this.commentText) {
                 alert(`${type}内容不能为空`);

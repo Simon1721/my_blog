@@ -2,9 +2,25 @@ function getDate(date) {
     return new Date(date).toLocaleDateString().replace(/\//g, '-')
 }
 
+new Vue({
+    el:'#search',
+    data:{
+        searchKeyword:'',
+        link:'',
+    },
+    methods:{
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        }
+    }
+
+})
+
 const Vm_container = new Vue({
     el: '#container',
     data: {
+        searchKeyword:'',
+        link:'',
         goodArtList: [],
         latestList: [],
         imglist: [
@@ -36,6 +52,11 @@ const Vm_container = new Vue({
             })
             this.latestList = tempData;
         });
+    },
+    methods:{
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        }
     }
 })
 

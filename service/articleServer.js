@@ -96,10 +96,7 @@ exports.findArticle = async function (keyword, page = 1, limit = 6) {
         where: {
             name: {
                 [Op.like]: `%${keyword}%`
-            },
-            tag: {
-                [Op.like]: `%${keyword}%`
-            },
+            }
         },
         offset: (page - 1) * limit,
         limit: limit
@@ -146,7 +143,7 @@ exports.findArticleByTag = async function (tag, page = 1, limit = 6) {
 exports.findArticleAll = async function (keyword) {
     let where = {}
     if (keyword) {
-        where.tag = {
+        where.name = {
             [Op.like]: `%${keyword}%`
         }
     }

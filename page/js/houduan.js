@@ -2,9 +2,26 @@ function getDate(date) {
     return new Date(date).toLocaleDateString().replace(/\//g, '-')
 }
 
+
+new Vue({
+    el:'#search',
+    data:{
+        searchKeyword:'',
+        link:'',
+    },
+    methods:{
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        }
+    }
+
+})
+
 const Vm_container = new Vue({
     el: '#container',
     data: {
+        searchKeyword:'',
+        link:'',
         pagintionData: {
             newLimit: 6,
             newTotal: 1,
@@ -24,6 +41,9 @@ const Vm_container = new Vue({
         ]
     },
     methods: {
+        search(){
+            this.link = '/search.html?wd=' + this.searchKeyword
+        },
         nextChange(val) {
             axios.get('http://127.0.0.1:1721/api/article/getBytag', {
                 params: {

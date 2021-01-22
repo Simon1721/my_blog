@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的博客</title>
+    <link rel="stylesheet" href="./css/search.css" />
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="//at.alicdn.com/t/font_2288416_1gw1zznuqj4.js"></script>
+
+</head>
+<body">
+    <!-- 头部导航 -->
+    <div id="top">
+        <div class="header">
+            <div class="logo">Blog</div>
+            <ul>
+                <li><a href="/index.html">主页</a></li>
+                <li><a href="/about.html" target="_blank">关于我</a></li>
+                <li><a href="/qianduan.html" target="_blank">前端</a></li>
+                <li><a href="/houduan.html" target="_blank">后端</a></li>
+                <li><a href="/liuyan.html" target="_blank">留言</a></li>
+            </ul>
+            <div class="search" id="search">
+                <input type="text" placeholder="请输入关键词查找" v-model="searchKeyword" id="search-input" />
+                <button style="font-size: 16px;" @click="search">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-xingtaiduICON_sousuo--"></use>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 内容区 -->
+    <div id="container" class="container">
+        <div id="new-article" class="new-article">
+            <div class="left" v-if="newArtList.length">
+                <div class="new" v-for="newart in newArtList" :key="newart.id">
+                    <a :href="newart.link" target="_blank">
+                        <div>
+                            <div class="img">
+                                <img :src="newart.imgurl" :alt="newart.name" :title="newart.name" />
+                            </div>
+                            <p class="titel">{{ newart.name }}</p>
+                            <p class="info" v-html="newart.content"></p>
+                            <span>阅读正文></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div v-else class="left">
+                <h1 style="color: #abcdef; text-align: center; margin-bottom: 50px;">抱歉，没有找到相应文章</h1>
+                <img :src="notFound" alt="" width="800">
+            </div>
+            <div class="right">
+                <div class="focus-us">
+                    <h2>关注我</h2>
+                    <div class="focus">
+                        <a href="https://github.com/Simon1721?tab=repositories" target="_blank" title="点击跳转到蒋雄的github">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-github"></use>
+                            </svg>
+                        </a>
+                        <a href="https://wx.qq.com/" target="_blank" title="点击跳转">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-weixin"></use>
+                            </svg>
+                        </a>
+                        <a href="https://user.qzone.qq.com/943417190/infocenter" target="_blank" title="点击跳转到蒋雄的QQ空间">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-qq"></use>
+                            </svg>
+                        </a>
+                        <a href="https://weibo.com/5887058001/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1"
+                            target="_blank" title="点击跳转到蒋雄的微博">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-weibo"></use>
+                            </svg>
+                        </a>
+                        <a href="https://baike.baidu.com/item/Facebook/7449587?fr=aladdin" target="_blank"
+                            title="不好意思，中国大陆暂时不能正常访问facebook">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-facebook"></use>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="article">
+                    <h2>热门文章</h2>
+                    <div class="art-list" v-for="latest in latestList" :key="latest.id">
+                        <a :href="latest.link" target="_blank">
+                            <div>
+                                <div class="img-info">
+                                    <img :src="latest.imgurl" :alt="latest.name" :title="latest.name" />
+                                </div>
+                                <p class="titel">{{ latest.name }}</p>
+                                <span class="date">发布日期: {{ latest.publishDate }}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- 好文推荐 -->
+                <div class="good-recommend">
+                    <h2>好文推荐</h2>
+                    <ul class="good-list">
+                        <li v-for="goodImg in goodArtList" :key="goodImg.id">
+                            <a :href="goodImg.link" target="_blank">
+                                <div class="img">
+                                    <img :src="goodImg.imgurl" :title="goodImg.name" />
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="obscuration">
+                        <div class="tem"></div>
+                        <div class="surface">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-weibo"></use>
+                            </svg>
+                            <span>关注我的微博@Closer丶sky</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 翻页插件 -->
+        <a href="#new-article">
+            <div class="page">
+                <el-pagination background layout="prev, pager, next" prev-text="上一页" next-text="下一页"
+                    :total="pagintionData.newTotal" :page-size="pagintionData.newLimit"
+                    :current-page="pagintionData.currentPage" @next-click="nextChange" @prev-click="prevChange"
+                    @current-change="currentChange">
+                </el-pagination>
+            </div>
+        </a>
+        <ul class="img-list">
+            <li v-for="Img in imglist">
+                <div class="img">
+                    <img :src="Img" alt="" />
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="footer" class="footer">
+        <!-- 页底信息 -->
+        <div class="blog-info">
+            <div class="blog">
+                <div class="blog-logo">
+                    <div class="logo">Blog</div>
+                    <p>
+                        人们常觉得准备的阶段是在浪费时间，只有当真正机会来临，而自己没有能力把握的时候，才能觉悟自己平时没有准备才是浪费了时间... </p>
+                    <ul>
+                        <li>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-github"></use>
+                            </svg>
+                        </li>
+                        <li>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-weixin"></use>
+                            </svg>
+                        </li>
+                        <li>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-qq"></use>
+                            </svg>
+                        </li>
+                        <li>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-weibo"></use>
+                            </svg>
+                        </li>
+                        <li>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-facebook"></use>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+                <div class="article">
+                    <h2>最新文章</h2>
+                    <div class="art-list" v-for="footerart in footerlist" :key="footerart.id">
+                        <a :href="footerart.link" target="_blank">
+                            <div>
+                                <div class="img-info">
+                                    <img :src="footerart.imgurl" :alt="footerart.name" :title="footerart.name" />
+                                </div>
+                                <p class="titel">{{ footerart.name }}</p>
+                                <span class="date">发布日期: {{ footerart.publishDate }}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="good-recommend">
+                    <h2>算法推荐</h2>
+                    <ul class="good-list">
+                        <li v-for="goodImg in goodList" :key="goodImg.id">
+                            <a :href="goodImg.link" target="_blank">
+                                <div class="img">
+                                    <img :src="goodImg.imgurl" :title="goodImg.name" />
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <!-- 备案 -->
+        <div class="record-info">
+            <div class="record">
+                <span class="left">© 2020 Blog 版权所有 网站备案号:
+                    京IPC备88888888-8号(纯属虚构)</span>
+                <ul class="right">
+                    <li>服务条款</li>
+                    <li>隐私政策</li>
+                    <li>法律申明</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+    <script src="./js/search.js"></script>
+    </body>
+
+</html>
