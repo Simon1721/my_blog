@@ -1,7 +1,6 @@
 const article = require('../dao/articles');
 const { Op } = require('sequelize');
 const validate = require('validate.js');
-const moment = require('moment')
 
 /**
  * 添加一篇文章

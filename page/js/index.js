@@ -1,6 +1,43 @@
+const cookie = window.document.cookie;
+
 function getDate(date) {
     return new Date(date).toLocaleDateString().replace(/\//g, '-')
 }
+
+new Vue({
+    el:'#user',
+    data:{
+        isLogin:'',
+    },
+    methods:{
+        logout(){
+            const isLogout = confirm('确定要退出登录吗？');
+            if(isLogout){
+                window.location = 'http://localhost:1721/login.html'
+            }
+        },
+        login(){
+            window.location = 'http://localhost:1721/login.html'
+        }
+    },
+    created(){
+        if(cookie){
+            const index = cookie.indexOf('=')
+            const id = cookie.slice(index+1)
+            axios({
+                method:'get',
+                url:'http://127.0.0.1:1721/api/user/getById',
+                params:{
+                    id,
+                }
+            }).then(res=>{
+                this.isLogin = res.data.data
+                console.log(this.isLogin);
+            })
+        }
+    }
+})
+
 new Vue({
     el:'#search',
     data:{

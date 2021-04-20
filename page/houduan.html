@@ -40,6 +40,16 @@
           </button>
         </div>
       </div>
+      <div id="user">
+        <div class="user-info" v-if='isLogin'>
+          <div class="user-img">
+            <img :src="isLogin.imgurl" :alt="isLogin.name">
+          </div>
+          <div class="user-name">{{ isLogin.name }}</div>
+          <div class="logout" @click="logout()">[退出]</div>
+        </div>
+        <div class="login" v-else @click='login()'>亲，请登录</div>
+      </div>
     </div>
     <div id="container" class="container">
       <!-- 最新文章 -->
@@ -162,14 +172,6 @@
         </li>
       </ul>
     </div>
-    <!-- 回到顶部 -->
-    <a href="#top">
-      <div class="backTop">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-huidaodingbu"></use>
-        </svg>
-      </div>
-    </a>
     <div id="footer" class="footer">
       <!-- 页底信息 -->
       <div class="blog-info">

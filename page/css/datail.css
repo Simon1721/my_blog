@@ -33,6 +33,8 @@ li {
   /* position: fixed; */
 }
 
+
+
 .header {
   width: 1190px;
   height: 100%;
@@ -94,6 +96,49 @@ li {
   width: 100%;
   background-color: #f2f2f2;
   border-top: 1px solid#c4c4c4;
+}
+
+.container .user-info{
+  display: flex;
+  align-items: center;
+  margin-top: -68px;
+  margin-left: 1570px;
+  color: #4299e1;
+}
+
+.container .login{
+  margin-top: -63px;
+  margin-left: 1580px;
+  color: #ff5555;
+  cursor: pointer;
+}
+
+.login:hover{
+  color: #4299e1;
+}
+
+.user-info .user-img{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  overflow: hidden;
+ }
+
+.user-info .user-img img{
+  width: 100%;
+  height: 100%;
+}
+
+.user-info .user-name{
+  margin: 0 10px;
+}
+
+.user-info .logout{
+  cursor: pointer;
+}
+
+.logout:hover{
+  color: #f40;
 }
 
 .hot-article {

@@ -1,4 +1,5 @@
 let id = 0;
+let cookie = document.cookie;
 
 function getDate(date) {
     return new Date(date).toLocaleDateString().replace(/\//g, '-')
@@ -45,6 +46,7 @@ new Vue({
 const Vm_container = new Vue({
     el: '#container',
     data: {
+        isLogin:'',
         searchKeyword:'',
         link:'',
         timer: null,
@@ -73,6 +75,13 @@ const Vm_container = new Vue({
             this.link = '/search.html?wd=' + this.searchKeyword
         },
         publishComment() {
+            if(!cookie){
+                const istrue = confirm('亲，需要登录后才能发表评论哦,快去登录吧')
+                if(istrue){
+                    window.location = 'http://localhost:1721/login.html';
+                    return;
+                }
+            }
             if (!this.commentText) {
                 alert(`${type}内容不能为空`);
                 return;
@@ -83,11 +92,11 @@ const Vm_container = new Vue({
                 url: 'http://127.0.0.1:1721/api/comment/add',
                 data: {
                     parentId: id,
-                    parentName: type == '发布' ? 'Blue rain' : 'Blue rain 回复 ' + this.replyName,
+                    parentName: type == '发布' ? this.isLogin.name : `${this.isLogin.name} 回复 ` + this.replyName,
                     publishDate: +new Date(),
                     ArticleId: id,
                     content: this.commentText,
-                    imgurl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3155998395,3600507640&fm=26&gp=0.jpg'
+                    imgurl: this.isLogin.imgurl
                 }
             }).then(() => {
                 alert(`${type}评论成功`)
@@ -107,6 +116,13 @@ const Vm_container = new Vue({
             })
         },
         reply(replyName) {
+            if(!cookie){
+                const istrue = confirm('亲，需要登录后才能回复评论哦,快去登录吧')
+                if(istrue){
+                    window.location = 'http://localhost:1721/login.html';
+                    return;
+                }
+            }
             this.replyName = replyName
             this.placeholder = '请输入回复' + replyName + '的内容';
             this.$nextTick((x) => {   //正确写法
@@ -122,8 +138,32 @@ const Vm_container = new Vue({
             this.$refs.cancel.style.display = 'none'
             this.placeholder = '请输入您要要发表的评论';
         },
+        logout(){
+            const isLogout = confirm('确定要退出登录吗？');
+            if(isLogout){
+                window.location = 'http://localhost:1721/login.html'
+            }
+        },
+        login(){
+            window.location = 'http://localhost:1721/login.html'
+        }
     },
     created() {
+        if(cookie){
+            const index = cookie.indexOf('=')
+            const id = cookie.slice(index+1)
+            console.log(id);
+            axios({
+                method:'get',
+                url:'http://127.0.0.1:1721/api/user/getById',
+                params:{
+                    id,
+                }
+            }).then(res=>{
+                this.isLogin = res.data.data
+                console.log(this.isLogin);
+            })
+        }
         const query = window.location.search
         const index = query.indexOf('=')
         id = query.toString().substring(index + 1);

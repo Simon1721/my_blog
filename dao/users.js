@@ -1,8 +1,8 @@
 const sequelize = require('./dataBaseConfig');
 const DadaTypes = require('sequelize');
 
-//文章表
-module.exports = sequelize.define('Article', {
+//用户表
+module.exports = sequelize.define('User', {
     name: {
         type: DadaTypes.STRING,
         allowNull: false
@@ -11,24 +11,13 @@ module.exports = sequelize.define('Article', {
         type: DadaTypes.TEXT,
         allowNull: false
     },
-    content: {
-        type: DadaTypes.TEXT,
-        allowNull: false
-    },
-    author: {
+    loginID: {
         type: DadaTypes.STRING,
         allowNull: false
     },
-    tag: {
+    loginPwd: {
         type: DadaTypes.STRING,
         allowNull: false
-    },
-    publishDate:{
-        type: DadaTypes.DATE,
-        allowNull: false,
-        get(){
-            return this.getDataValue('publishDate').getTime();
-        }
     }
 }, {
     paranoid: true

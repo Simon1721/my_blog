@@ -4,9 +4,8 @@ function getDate(date) {
 
 const query = window.location.search
 const index = query.indexOf('=')
-const keyword = query.toString().substring(index + 1);
-
-document.querySelector('title').innerHTML = keyword + ' 搜索结果';
+const keyword = decodeURIComponent(query.slice(index + 1)); //decodeURIComponent() 解码url中的中文字符
+document.querySelector('title').innerHTML = keyword + ' 的搜索结果';
 document.querySelector('#search-input').setAttribute('placeholder',keyword);
 
 new Vue({

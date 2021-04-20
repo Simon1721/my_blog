@@ -39,6 +39,15 @@
     </div>
     <!-- 内容区 -->
     <div id="container" class="container">
+      <!-- 用户登录 -->
+      <div class="user-info" v-if='isLogin'>
+        <div class="user-img">
+          <img :src="isLogin.imgurl" :alt="isLogin.name">
+        </div>
+        <div class="user-name">{{ isLogin.name }}</div>
+        <div class="logout" @click="logout()">[退出]</div>
+      </div>
+      <div class="login" v-else @click='login()'>亲，请登录</div>
       <div class="new-article">
         <div class="left">
           <h2 class="title">留言板</h2>

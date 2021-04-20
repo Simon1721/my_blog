@@ -18,7 +18,7 @@
 
 <body id="top">
   <!-- 头部导航 -->
-  <div id="top">
+  <div id="dingbu">
     <div class="header">
       <div class="logo">Blog</div>
       <ul>
@@ -39,7 +39,17 @@
         </button>
       </div>
     </div>
-  </div>
+    <div id="user">
+      <div class="user-info" v-if='isLogin'>
+        <div class="user-img">
+          <img :src="isLogin.imgurl" :alt="isLogin.name">
+        </div>
+        <div class="user-name">{{ isLogin.name }}</div>
+        <div class="logout" @click='logout()'>[退出]</div>
+      </div>
+      <div class="login" v-else @click='login()'>亲，请登录</div>
+    </div>
+    </div>
   <!-- 热门文章 -->
   <div class="hot-article">
     <div class="info">

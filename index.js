@@ -1,4 +1,4 @@
-require('./web/init');
+require('./routers/init');
 require('./service/init')
 require('./dao/init')
 // require('./dao/liuyans')

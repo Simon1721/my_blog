@@ -1,4 +1,5 @@
 const E = window.wangEditor;
+const cookie = window.document.cookie;
 
 new Vue({
     el:'#search',
@@ -17,6 +18,7 @@ new Vue({
 new Vue({
     el: '#container',
     data: {
+        isLogin:'',
         searchKeyword:'',
         link:'',
         editor: null,
@@ -56,6 +58,22 @@ new Vue({
         this.editor = null
     },
     created() {
+        //根据cookie获取用户信息
+        if(cookie){
+            const index = cookie.indexOf('=')
+            const id = cookie.slice(index+1)
+            console.log(id);
+            axios({
+                method:'get',
+                url:'http://127.0.0.1:1721/api/user/getById',
+                params:{
+                    id,
+                }
+            }).then(res=>{
+                this.isLogin = res.data.data
+                console.log(this.isLogin);
+            })
+        }
         //欢迎来到我的博客字体颜色随机变换
         setInterval(() => {
             this.$refs.wlecome.style.color = `rgb(${this.getRandom()},${this.getRandom()},${this.getRandom()})`
@@ -147,6 +165,13 @@ new Vue({
 
         //发表留言事件处理函数
         submitLiuyan() {
+            if(!cookie){
+                const istrue = confirm('亲，登录后才能留言哦，快去登录吧')
+                if(istrue){
+                    window.location = 'http://localhost:1721/login.html'
+                    return;
+                }
+            }
             const text = this.editor.txt.html()
             if (!text) {
                 alert('亲，你还没有填写留言内容哦~');
@@ -157,10 +182,10 @@ new Vue({
                 url: 'http://127.0.0.1:1721/api/liuyan/add',
                 data: {
                     parentId: -1,
-                    name: 'Blue rain',
+                    name: this.isLogin.name,
                     content: text,
                     publishDate: +new Date(),
-                    imgurl: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1517417813,2367413112&fm=26&gp=0.jpg',
+                    imgurl: this.isLogin.imgurl,
                 }
             }).then(() => {
                 axios({
@@ -188,6 +213,13 @@ new Vue({
 
         //提交回复事件处理函数
         submitReply(index, parentId) {
+            if(!cookie){
+                const istrue = confirm('亲，需要登录后才能发表留言哦,快去登录吧')
+                if(istrue){
+                    window.location = 'http://localhost:1721/login.html';
+                    return;
+                }
+            }
             if (!this.replyContent) {
                 alert('亲，还没有填写回复内容哦~');
                 return;
@@ -197,8 +229,8 @@ new Vue({
                 url: 'http://127.0.0.1:1721/api/liuyan/add',
                 data: {
                     parentId,
-                    name: 'Blue rain',
-                    imgurl: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1517417813,2367413112&fm=26&gp=0.jpg',
+                    name: this.isLogin.name,
+                    imgurl: this.isLogin.imgurl,
                     content: this.replyContent,
                     publishDate: +new Date(),
                 }
@@ -219,6 +251,15 @@ new Vue({
         //取消回复事件处理函数
         cancelReply(index) {
             $('.liuyan-list').children(index).find('.reply-box').css({ display: 'none' });
+        },
+        logout(){
+            const isLogout = confirm('确定要退出登录吗？');
+            if(isLogout){
+                window.location = 'http://localhost:1721/login.html'
+            }
+        },
+        login(){
+            window.location = 'http://localhost:1721/login.html'
         }
     },
 })
