@@ -5,26 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>注册</title>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/axios.min.js"></script>
     <link rel="stylesheet" href="./css/enroll.css">
 </head>
 <body>
     <div id="wrapper">
+        <h2>用户注册</h2>
         <div class="item name">
-            昵称 ：<input type="text" placeholder="请输入用户名">
+            昵称 ：<input type="text" placeholder="请输入用户名" v-model="userName">
         </div>
         <div class="item img">
-            头像 ：<input type="text" placeholder="请输入头像地址">
+            头像 ：<input type="text" placeholder="请输入头像地址" v-model="headPortrait">
         </div>
         <div class="item loginID">
-            账号 ：<input type="text" placeholder="请输入账号">
+            账号 ：<input type="text" placeholder="请输入账号" v-model="loginID">
         </div>
         <div class="item password">
-            密码 ：<input type="password" placeholder="请输入密码">
+            密码 ：<input type="password" placeholder="请输入密码" v-model="loginPwd">
         </div>
         <div class="item confirmPassword">
-            确认密码 ：<input type="password" placeholder="请确认密码">
+            确认密码 ：<input type="password" placeholder="请确认密码" v-model="confirmPassword">
         </div>
-        <button class="login">提 交</button>
+        <button class="login" @click="submit()">完 成</button>
     </div>
 
     <canvas id="Mycanvas" style="position: fixed;z-index: 1;"></canvas>
@@ -132,6 +135,6 @@
         }
  
     </script>
-    
+    <script src="./js/enroll.js"></script>
 </body>
 </html>

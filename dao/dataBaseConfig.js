@@ -2,6 +2,7 @@
 
 const Sequelize = require('sequelize');
 
+//连接数据库
 const sequelize = new Sequelize('js_blog','root','jiang@125879',{
     host:'localhost',
     dialect:'mysql',

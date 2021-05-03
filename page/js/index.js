@@ -4,6 +4,24 @@ function getDate(date) {
     return new Date(date).toLocaleDateString().replace(/\//g, '-')
 }
 
+function articleAdmin (){
+    if(!cookie){
+        alert('您还没有登录，快去登录吧')
+        window.location = 'http://localhost:1721/login.html';
+        return;
+    }
+    if(cookie != 'token=1'){
+        alert('对不起您不是管理员，没有权限管理站点文章')
+        return;
+    }
+    window.location = 'http://localhost:1721/articleAdmin.html';
+}
+
+const artAdmin = document.getElementsByClassName('articleAdmin')[0];
+artAdmin.onclick = function(){
+    articleAdmin()
+}
+
 new Vue({
     el:'#user',
     data:{
@@ -32,7 +50,6 @@ new Vue({
                 }
             }).then(res=>{
                 this.isLogin = res.data.data
-                console.log(this.isLogin);
             })
         }
     }

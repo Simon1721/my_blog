@@ -62,7 +62,6 @@ new Vue({
         if(cookie){
             const index = cookie.indexOf('=')
             const id = cookie.slice(index+1)
-            console.log(id);
             axios({
                 method:'get',
                 url:'http://127.0.0.1:1721/api/user/getById',
@@ -71,7 +70,6 @@ new Vue({
                 }
             }).then(res=>{
                 this.isLogin = res.data.data
-                console.log(this.isLogin);
             })
         }
         //欢迎来到我的博客字体颜色随机变换

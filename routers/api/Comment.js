@@ -13,7 +13,6 @@ comRouter.post('/add', async (req, res) => {
         comtObj += chunk
     })
     req.on('end', async () => {
-        console.log(JSON.parse(comtObj));
         const result = await comServ.addComment(JSON.parse(comtObj))
         res.send(sendMsg.getResult(result))
     })

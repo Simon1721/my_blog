@@ -46,7 +46,6 @@ new Vue({
                 }
             }).then(res=>{
                 this.isLogin = res.data.data
-                console.log(this.isLogin);
             })
         }
     }

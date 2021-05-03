@@ -23,13 +23,13 @@
       <div class="logo">Blog</div>
       <ul>
         <li class="active"><a>主页</a></li>
-        <li><a href="/about.html" target="_blank">关于我</a></li>
         <li><a href="/qianduan.html" target="_blank">前端</a></li>
         <li><a href="/houduan.html" target="_blank">后端</a></li>
         <li><a href="/liuyan.html" target="_blank">留言</a></li>
+        <li><a class="articleAdmin">文章管理</a></li>
       </ul>
       <div id="search" class="search">
-        <input type="text" placeholder="请输入关键词查找" v-model="searchKeyword" />
+        <input type="text" placeholder="请输入关键词查找" v-model="searchKeyword">
         <button style="font-size: 16px;"  @click="search">
           <a :href="link" target="_blank">
             <svg class="icon" aria-hidden="true">
@@ -173,7 +173,7 @@
         <div class="art-search">
           <h2>文章搜索</h2>
           <div class="search">
-            <input type="text" placeholder="请输入需要搜索的文字" v-model="searchKeyword"/>
+            <input type="text" placeholder="请输入需要搜索的文字" v-model="searchKeyword">
             <a :href="link" target="_blank">
               <button @click="search">搜索</button>
             </a>

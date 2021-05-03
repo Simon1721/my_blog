@@ -1,6 +1,6 @@
 const user = require('../dao/users');
 const validate = require('validate.js');
-const md5 = require('md5')
+// const md5 = require('md5')
 
 /**
  * 添加一名用户
@@ -27,9 +27,9 @@ exports.addUser = async function (userObj) {
             presence: {
                 allowEmpty: false
             },
-            type: 'number',
+            type: 'string',
             length: {
-                minimum: 6,
+                minimum: 3,
                 maximum: 11
             }
         },
@@ -39,14 +39,15 @@ exports.addUser = async function (userObj) {
             },
             type: 'string',
             length: {
-                minimum: 6,
+                minimum: 3,
                 maximum: 16
             }
         }
     }
     const _userObj = validate(userObj, rule)
+    console.log(_userObj);
     if (!_userObj) {
-        userObj.loginPwd = md5(userObj.loginPwd)
+        // userObj.loginPwd = md5(userObj.loginPwd)
         const result = await user.create(userObj);
         return result.toJSON();
     }

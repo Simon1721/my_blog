@@ -12,6 +12,7 @@
 </head>
 <body>
     <div id="wrapper">
+        <h2>账号登录</h2>
         <div class="user">
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-zhanghao"></use>
@@ -22,7 +23,7 @@
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-mima"></use>
             </svg>
-            <input type="password" placeholder="请输入密码" v-model="loginPwd">
+            <input type="password" placeholder="请输入密码" v-model="loginPwd" @keyup.enter="submit()">
         </div>
         <button class="login" @click="submit()">登 录</button>
         <a href="/enroll.html"><button class="enroll">注 册</button></a>

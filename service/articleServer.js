@@ -43,12 +43,11 @@ exports.addArticle = async function (artobj) {
             presence: {
                 allowEmpty: false
             },
-            datetime: {
-                dateOnly: true,
-            }
+            datetime: true
         }
     }
     const _artobj = validate(artobj, rule)
+    console.log(_artobj);
     if (!_artobj) {
         const result = await article.create(artobj);
         return result.toJSON();

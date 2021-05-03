@@ -3,6 +3,7 @@ const DadaTypes = require('sequelize');
 
 //用户表
 module.exports = sequelize.define('User', {
+    //以下为各字段的约束条件
     name: {
         type: DadaTypes.STRING,
         allowNull: false

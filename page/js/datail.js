@@ -75,45 +75,46 @@ const Vm_container = new Vue({
             this.link = '/search.html?wd=' + this.searchKeyword
         },
         publishComment() {
+            const type = this.$refs.submit.innerHTML;
             if(!cookie){
                 const istrue = confirm('亲，需要登录后才能发表评论哦,快去登录吧')
                 if(istrue){
                     window.location = 'http://localhost:1721/login.html';
                     return;
                 }
-            }
-            if (!this.commentText) {
-                alert(`${type}内容不能为空`);
-                return;
-            }
-            const type = this.$refs.submit.innerHTML;
-            axios({
-                method: 'post',
-                url: 'http://127.0.0.1:1721/api/comment/add',
-                data: {
-                    parentId: id,
-                    parentName: type == '发布' ? this.isLogin.name : `${this.isLogin.name} 回复 ` + this.replyName,
-                    publishDate: +new Date(),
-                    ArticleId: id,
-                    content: this.commentText,
-                    imgurl: this.isLogin.imgurl
+            }else{
+                if (!this.commentText) {
+                    alert(`${type}内容不能为空`);
+                    return;
                 }
-            }).then(() => {
-                alert(`${type}评论成功`)
-                this.commentText = '';
-                axios.get('http://127.0.0.1:1721/api/comment/get', {
-                    params: {
-                        parentId: id
+                axios({
+                    method: 'post',
+                    url: 'http://127.0.0.1:1721/api/comment/add',
+                    data: {
+                        parentId: id,
+                        parentName: type == '发布' ? this.isLogin.name : `${this.isLogin.name} 回复 ` + this.replyName,
+                        publishDate: +new Date(),
+                        ArticleId: id,
+                        content: this.commentText,
+                        imgurl: this.isLogin.imgurl
                     }
-                }).then(comments => {
-                    const newComments = comments.data.data;
-                    newComments.forEach(item => {
-                        item.publishDate = getCommentTime(item.publishDate)
-                    })
-                    this.commentList = newComments.reverse()
-                    this.commentNum = this.commentList.length
-                });
-            })
+                }).then(() => {
+                    alert(`${type}评论成功`)
+                    this.commentText = '';
+                    axios.get('http://127.0.0.1:1721/api/comment/get', {
+                        params: {
+                            parentId: id
+                        }
+                    }).then(comments => {
+                        const newComments = comments.data.data;
+                        newComments.forEach(item => {
+                            item.publishDate = getCommentTime(item.publishDate)
+                        })
+                        this.commentList = newComments.reverse()
+                        this.commentNum = this.commentList.length
+                    });
+                })
+            }
         },
         reply(replyName) {
             if(!cookie){
@@ -152,7 +153,6 @@ const Vm_container = new Vue({
         if(cookie){
             const index = cookie.indexOf('=')
             const id = cookie.slice(index+1)
-            console.log(id);
             axios({
                 method:'get',
                 url:'http://127.0.0.1:1721/api/user/getById',
@@ -161,7 +161,6 @@ const Vm_container = new Vue({
                 }
             }).then(res=>{
                 this.isLogin = res.data.data
-                console.log(this.isLogin);
             })
         }
         const query = window.location.search

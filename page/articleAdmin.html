@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文章管理</title>
+    <link rel="stylesheet" href="./css/articleAdmin.css" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="https://unpkg.zhimg.com/wangeditor@4.6.2/dist/wangEditor.min.js"></script>
+  </head>
+  <body>
+    <div class="top">
+      <div class="header">
+        <div class="logo">Blog</div>
+        <h2>文章管理</h2>
+        <div class="back">返回</div>
+      </div>
+    </div>
+    <div id="container" class="container">
+      <div class="menu">
+        <ul>
+          <li class="active">发布文章</li>
+          <li>管理文章</li>
+        </ul>
+      </div>
+      <div class="content">
+        <div class="publish" id="publish">
+          <h2>添加文章</h2>
+          <input type="text" placeholder="请输入文章标题" v-model="title" />
+          <input type="text" placeholder="请输入文章作者" v-model="author" />
+          <input type="text" placeholder="请输入文章所属标签" v-model="tag" />
+          <input
+            type="text"
+            placeholder="请填写文章封面地址"
+            v-model="imgurl"
+          />
+          <div id="editor"></div>
+          <button class="submit" @click="submit">提 交</button>
+        </div>
+        <div class="delete">
+          <ul>
+            <li>
+              <div>id</div>
+              <div>标题</div>
+              <div>作者</div>
+              <div>发布时间</div>
+              <div>操作</div>
+            </li>
+          </ul>
+          <ul id="delete">
+            <li v-for="article in articleList">
+              <div>{{ article.id }}</div>
+              <div>{{ article.name }}</div>
+              <div>{{ article.author }}</div>
+              <div>{{ article.publishDate }}</div>
+              <div class="remove" @click="remove(article.id)">删除</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="./js/articleAdmin.js"></script>
+  </body>
+</html>

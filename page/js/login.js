@@ -14,17 +14,13 @@ const Vm = new Vue({
                 method: 'post',
                 url: 'http://localhost:1721/api/user/login', params
             }).then(res => {
-                // console.log(res.data.data == '');
                 if (res.data.data != '') {
                     alert('登录成功')
                     window.history.go(-1)
                     return;
                 }
-                alert('该用户不存在，请检查后重试！')
+                alert('账号或密码错误，请检查后重试。若您没有账号，请注册后重试！')
             })
         }
-    },
-    cratede() {
-
     }
 })

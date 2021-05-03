@@ -31,6 +31,13 @@ body {
   z-index: 2;
 }
 
+h2 {
+  color: #f2f2f2;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 28px;
+  letter-spacing: 5px;
+}
 .user {
   display: inline-block;
   position: absolute;
@@ -50,7 +57,7 @@ body {
 input {
   width: 300px;
   height: 45px;
-  border-radius: 5px;
+  border-radius: 8px;
   border: none;
   outline: none;
   font-size: 18px;
@@ -66,7 +73,7 @@ button {
   height: 45px;
   border: none;
   background-color: #4299e1;
-  border-radius: 5px;
+  border-radius: 8px;
   margin-bottom: 10px;
   left: 50%;
   transform: translateX(-43%);
